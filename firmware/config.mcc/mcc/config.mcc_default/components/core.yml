@@ -155,7 +155,7 @@ data:
       children:
       - children:
         - attributes:
-            value: Multimeter_A
+            value: RES_A
           type: User
         type: Values
       type: String
@@ -221,7 +221,7 @@ data:
       children:
       - children:
         - attributes:
-            value: Multimeter_B
+            value: RES_B
           type: User
         type: Values
       type: String
@@ -474,7 +474,7 @@ data:
       children:
       - children:
         - attributes:
-            value: Multimeter_C
+            value: RES_C
           type: User
         type: Values
       type: String

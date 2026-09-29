@@ -18,7 +18,7 @@ generatedFileHashHistoryMap:
 - file: ..\src\config\default\PIC32CM3204GV00064.ld
   hash: 97a08b8e5970f9fcdfbe425b6296b4d18c6c2d5684ee93a3e5c0a64f4e17f507
 - file: ..\src\config\default\definitions.h
-  hash: c3b47f3f6c786b27872d0d80276247a948abe7e59b29b74a3d554141baf99374
+  hash: 65361ea42998f1ab4b0ff4d2d2c134934a244098a94657e1031f76fe262bd441
 - file: ..\src\config\default\device.h
   hash: 0646c4898d4228be017060c9b2d06d435dcadfc3e140a4ead235ba8c11d2ef34
 - file: ..\src\config\default\device_cache.h
@@ -28,7 +28,7 @@ generatedFileHashHistoryMap:
 - file: ..\src\config\default\exceptions.c
   hash: 42f9da2668e04ccb3473d45b149683a00f80072c6883c7918d6ce93997cd6987
 - file: ..\src\config\default\initialization.c
-  hash: dc632ffb2aa5d33536641a7075507d350b0c32a3fbf940e95362c2c0cb791003
+  hash: 2b2661ca5207c78591ddf47a1dfb8e87acf4312cd75f7c4245a92f9c4ec602f3
 - file: ..\src\config\default\interrupts.c
   hash: ec37704e70dd01494a5157d51c7901300ff3c8f226e88ea03535adbd04e1b54d
 - file: ..\src\config\default\interrupts.h
@@ -54,7 +54,7 @@ generatedFileHashHistoryMap:
 - file: ..\src\config\default\peripheral\port\plib_port.c
   hash: dcd119e18771e67377becba8a3fa21c261e5a29b8ac139fb3d97a7b092f0533e
 - file: ..\src\config\default\peripheral\port\plib_port.h
-  hash: ca759f138b24bcb754037fde48a624ff9a87ba3e1f2aab757d985cd59e46e481
+  hash: fc957cd93a1fe766e72d89aea448f31d17bedaaaa302ffbe1019233bc292f875
 - file: ..\src\config\default\peripheral\sercom\spi_master\plib_sercom5_spi_master.c
   hash: 76a27a7ee8b798d1bfaf962974281cf88e53d720a412e204d322e36147c0e622
 - file: ..\src\config\default\peripheral\sercom\spi_master\plib_sercom5_spi_master.h
@@ -78,7 +78,7 @@ generatedFileHashHistoryMap:
 - file: ..\src\config\default\peripheral\tc\plib_tc_common.h
   hash: dfcd44628e6df3f21f95c3b998065c4c795e9ff87b67e9eb805a7eab4810f971
 - file: ..\src\config\default\pin_configurations.csv
-  hash: f91addc56da63140d6bec290d01750c5bf249505e5043cae03feda70711b4074
+  hash: 98dbf1a1b01782b1252eb6fa613194d580ea6636697555876cec58c1f7d5b8f9
 - file: ..\src\config\default\startup_xc32.c
   hash: e6227d89e36b74af1bc21e00e80b390502c97aaaa65796291f63b2d96cf0678e
 - file: ..\src\config\default\stdio\xc32_monitor.c

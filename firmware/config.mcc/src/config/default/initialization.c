@@ -145,8 +145,8 @@ void SYS_Initialize ( void* data )
 
     SERCOM2_USART_Initialize();
 
-
     SERCOM0_USART_Initialize();
+
 
     SERCOM5_SPI_Initialize();
 
