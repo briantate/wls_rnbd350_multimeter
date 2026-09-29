@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "temp-ctrl": {
+      "command": "python",
+      "args": ["mcp_server/temp_ctrl_mcp.py"],
+      "cwd": "C:/Projects/briantate/ai_for_embedded"
+    }
+  }
+}

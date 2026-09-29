@@ -1,0 +1,84 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.su
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+#cmake files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+!/Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# ninja files
+.ninja_deps
+.ninja_log
+
+#build directory files
+[bB][uU][iI][lL][dD]/
+[bB][iI][nN]/
+
+#cpputest files
+*.gcov
+*.gcno
+*.gcda
+*_tests
+tests/junit
+
+#Doxygen files
+*.dot
+
+#Cyclomatic Complexity files
+*.cyclo
+
+#Binary files assocated with a build
+*.bin
+*.elf
+*.hex
+*.list
+*.map
+
+# backup files
+**/*.bak
+
+# code coverage directories don't need to be tracked
+**/coverage/
+
+# test object directories
+**/obj/
