@@ -1,15 +1,15 @@
 # SDLC Progress Tracker
 
 **Project:** Bluetooth Ohmmeter Firmware  
-**Last Updated:** 2026-09-29  
+**Last Updated:** 2026-09-30  
 **Live Demo Deadline:** 2026-10-02
 
 ---
 
 ## Current Status
 
-**Current Phase:** Phase 2 — Architecture Design  
-**Next Action:** Launch embedded-architect agent to generate architecture artifacts
+**Current Phase:** Phase 3 — Test Planning  
+**Next Action:** Generate master test index and module test plans
 
 ---
 
@@ -44,14 +44,14 @@
 |-------|----------|----------|--------|
 | 1 | User Stories | `docs/requirements/user-stories.md` | ✅ Complete |
 | 1 | Project Backlog | TBD | ⏳ Not Started |
-| 2 | Architecture Overview | `docs/architecture/architecture-overview.md` | ⏳ Not Started |
-| 2 | Module Decomposition | `docs/architecture/module-decomposition.md` | ⏳ Not Started |
-| 2 | HAL Boundary | `docs/architecture/hal-boundary.md` | ⏳ Not Started |
-| 2 | Dependency Map | `docs/architecture/dependency-map.md` | ⏳ Not Started |
+| 2 | Architecture Overview | `docs/architecture/architecture-overview.md` | ✅ Complete |
+| 2 | Module Decomposition | `docs/architecture/module-decomposition.md` | ✅ Complete |
+| 2 | HAL Boundary | `docs/architecture/hal-boundary.md` | ✅ Complete |
+| 2 | Dependency Map | `docs/architecture/dependency-map.md` | ✅ Complete |
 | 2 | C4 Diagrams | `docs/architecture/diagrams/` | ✅ Complete |
 | 2 | ADRs | `docs/architecture/adr/` | ✅ Complete |
-| 3 | Master Test Index | `docs/test-plan/unit-tests/master-index.md` | ⏳ Not Started |
-| 3 | Module Test Plans | `docs/test-plan/unit-tests/<module>/` | ⏳ Not Started |
+| 3 | Master Test Index | `docs/test-plan/unit-tests/master-index.md` | ✅ Complete |
+| 3 | Module Test Plans | `docs/test-plan/unit-tests/<module>/` | ✅ Complete |
 | 4 | Module Headers | `firmware/src/<module>/<module>.h` | ⏳ Not Started |
 | 4 | Module Sources (stubs) | `firmware/src/<module>/<module>.c` | ⏳ Not Started |
 | 5 | Unit Tests | `firmware/tests/<module>/` | ⏳ Not Started |
@@ -79,7 +79,6 @@
 
 ## Next Steps
 
-1. **Launch `embedded-architect` agent** to generate architecture artifacts from user stories
-2. **Launch `drawio-architect` agent** to create C4 diagrams from the generated spec
-3. **Launch `adr-expert` agent** to expand ADR specs into full decision records
-4. Review and approve Architecture — **Gate G3**
+1. **Generate master test index** — create `docs/test-plan/unit-tests/master-index.md`
+2. **Generate module test plans** — create test plans for each module in architecture
+3. Review and approve Test Plans — **Gate G4**
