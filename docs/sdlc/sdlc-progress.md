@@ -8,8 +8,8 @@
 
 ## Current Status
 
-**Current Phase:** Phase 1 — Requirements Gathering  
-**Next Action:** Generate User Stories
+**Current Phase:** Phase 2 — Architecture Design  
+**Next Action:** Launch embedded-architect agent to generate architecture artifacts
 
 ---
 
@@ -17,9 +17,9 @@
 
 | Phase | Description | Status | Gate | Gate Status |
 |-------|-------------|--------|------|-------------|
-| **Phase 1** | Requirements Gathering | In Progress | G1: Product Brief | ✅ Approved (2026-09-29) |
-| | | | G2: User Stories | ⏳ Pending |
-| **Phase 2** | Architecture Design | Not Started | G3: Architecture | ⏳ Pending |
+| **Phase 1** | Requirements Gathering | ✅ Complete | G1: Product Brief | ✅ Approved (2026-09-29) |
+| | | | G2: User Stories | ✅ Approved (2026-09-30) |
+| **Phase 2** | Architecture Design | In Progress | G3: Architecture | ⏳ Pending |
 | **Phase 3** | Test Planning | Not Started | G4: Test Plans | ⏳ Pending |
 | **Phase 4** | Scaffolding | Not Started | G5: Scaffolding | ⏳ Pending |
 | **Phase 5** | TDD Implementation | Not Started | G6: Module Reviews | ⏳ Pending |
@@ -42,7 +42,7 @@
 
 | Phase | Artifact | Location | Status |
 |-------|----------|----------|--------|
-| 1 | User Stories | `docs/requirements/user-stories.md` | ⏳ Not Started |
+| 1 | User Stories | `docs/requirements/user-stories.md` | ✅ Complete |
 | 1 | Project Backlog | TBD | ⏳ Not Started |
 | 2 | Architecture Overview | `docs/architecture/architecture-overview.md` | ⏳ Not Started |
 | 2 | Module Decomposition | `docs/architecture/module-decomposition.md` | ⏳ Not Started |
@@ -67,7 +67,7 @@
 | Gate | Date | Reviewer | Outcome | Record Location |
 |------|------|----------|---------|-----------------|
 | G1 | 2026-09-29 | Brian Tate | Approved | (verbal) |
-| G2 | | | | |
+| G2 | 2026-09-30 | Brian Tate | Approved | (verbal) |
 | G3 | | | | |
 | G4 | | | | |
 | G5 | | | | |
@@ -79,7 +79,7 @@
 
 ## Next Steps
 
-1. **Generate User Stories** from Product Brief key features
-2. Conduct Value and Size Estimation meetings (human activity)
-3. Create Project Backlog with ROI calculations
-4. Review and approve User Stories — **Gate G2**
+1. **Launch `embedded-architect` agent** to generate architecture artifacts from user stories
+2. **Launch `drawio-architect` agent** to create C4 diagrams from the generated spec
+3. **Launch `adr-expert` agent** to expand ADR specs into full decision records
+4. Review and approve Architecture — **Gate G3**
