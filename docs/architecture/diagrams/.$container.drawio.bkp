@@ -1,0 +1,177 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Container Diagram" id="container">
+    <mxGraphModel dx="1434" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="Container Diagram - Bluetooth Ohmmeter" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="384" y="20" width="400" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Boundary G-01: Firmware -->
+        <mxCell id="G-01" value="Firmware (32 KB Flash)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="340" height="400" as="geometry"/>
+        </mxCell>
+
+        <!-- Boundary G-02: MCU -->
+        <mxCell id="G-02" value="MCU (PIC32CM3204GV00064)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=0;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="520" width="340" height="160" as="geometry"/>
+        </mxCell>
+
+        <!-- Boundary G-03: External Peripherals -->
+        <mxCell id="G-03" value="External Peripherals" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="480" y="520" width="340" height="320" as="geometry"/>
+        </mxCell>
+
+        <!-- C-01: Firmware Application -->
+        <mxCell id="C-01" value="&lt;b&gt;Firmware Application&lt;/b&gt;&lt;br&gt;&lt;br&gt;[C (bare-metal)]&lt;br&gt;&lt;br&gt;Main application code: app + services" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="120" y="140" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- C-02: HAL Layer -->
+        <mxCell id="C-02" value="&lt;b&gt;HAL Layer&lt;/b&gt;&lt;br&gt;&lt;br&gt;[C]&lt;br&gt;&lt;br&gt;Hardware abstraction interfaces" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="120" y="270" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- C-03: MCC Drivers -->
+        <mxCell id="C-03" value="&lt;b&gt;MCC Drivers&lt;/b&gt;&lt;br&gt;&lt;br&gt;[C (generated)]&lt;br&gt;&lt;br&gt;Microchip Code Configurator drivers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="120" y="400" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- C-04: MCU Hardware -->
+        <mxCell id="C-04" value="&lt;b&gt;MCU Hardware&lt;/b&gt;&lt;br&gt;&lt;br&gt;[PIC32CM3204]&lt;br&gt;&lt;br&gt;ARM Cortex-M0+, 48 MHz, 32KB/4KB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;fontColor=#000000;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="120" y="560" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- C-05: MCP3204 ADC -->
+        <mxCell id="C-05" value="&lt;b&gt;MCP3204 ADC&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External IC]&lt;br&gt;&lt;br&gt;12-bit SPI ADC for resistance measurement" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;fontColor=#000000;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="520" y="560" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- C-06: RNBD350 Module -->
+        <mxCell id="C-06" value="&lt;b&gt;RNBD350 Module&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External IC]&lt;br&gt;&lt;br&gt;Bluetooth Low Energy module" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;fontColor=#000000;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="520" y="690" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- E-01: BLE Client App -->
+        <mxCell id="E-01" value="&lt;b&gt;BLE Client App&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Generic BLE terminal or PC GUI receiving JSON data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="880" y="690" width="240" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- E-02: Debug Terminal -->
+        <mxCell id="E-02" value="&lt;b&gt;Debug Terminal&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Serial terminal for diagnostic output" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="880" y="560" width="240" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges -->
+        <!-- C-01 -> C-02 -->
+        <mxCell id="edge-01-02" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="C-01" target="C-02">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="label-01-02" value="Calls HAL APIs&lt;br&gt;[C function calls]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" connectable="0" parent="edge-01-02">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint x="60" y="-5" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- C-02 -> C-03 -->
+        <mxCell id="edge-02-03" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="C-02" target="C-03">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="label-02-03" value="Calls MCC APIs&lt;br&gt;[C function calls]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" connectable="0" parent="edge-02-03">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint x="60" y="-5" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- C-03 -> C-04 -->
+        <mxCell id="edge-03-04" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="C-03" target="C-04">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="label-03-04" value="Accesses registers&lt;br&gt;[Memory-mapped I/O]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" connectable="0" parent="edge-03-04">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint x="70" y="-5" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- C-04 -> C-05 -->
+        <mxCell id="edge-04-05" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="C-04" target="C-05">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="label-04-05" value="Reads ADC&lt;br&gt;[SPI (1 MHz, SERCOM5)]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" connectable="0" parent="edge-04-05">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint y="-20" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- C-04 -> C-06 -->
+        <mxCell id="edge-04-06" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="C-04" target="C-06">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="628"/>
+              <mxPoint x="460" y="735"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-04-06" value="BLE communication&lt;br&gt;[UART (115200, SERCOM0)]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" connectable="0" parent="edge-04-06">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint x="10" y="-20" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- C-04 -> E-02 -->
+        <mxCell id="edge-04-E02" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="C-04" target="E-02">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="840" y="583"/>
+              <mxPoint x="840" y="605"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-04-E02" value="Diagnostic output&lt;br&gt;[UART (115200, SERCOM2)]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" connectable="0" parent="edge-04-E02">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint x="-90" y="-20" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- C-06 -> E-01 -->
+        <mxCell id="edge-06-E01" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" edge="1" parent="1" source="C-06" target="E-01">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="label-06-E01" value="Streams JSON&lt;br&gt;[BLE transparent UART]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" vertex="1" connectable="0" parent="edge-06-E01">
+          <mxGeometry x="-0.2" y="2" relative="1" as="geometry">
+            <mxPoint y="-20" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="730" width="240" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-title" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="90" y="735" width="100" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-sw" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="90" y="765" width="30" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-sw-text" value="Container (SW)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="130" y="760" width="120" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-hw" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="90" y="795" width="30" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-hw-text" value="Container (HW)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="130" y="790" width="120" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-ext" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="90" y="825" width="30" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-ext-text" value="External System" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="130" y="820" width="120" height="30" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

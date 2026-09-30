@@ -1,0 +1,137 @@
+<mxfile host="Electron">
+  <diagram name="Container Diagram" id="container">
+    <mxGraphModel dx="1191" dy="865" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" value="Container Diagram - Bluetooth Ohmmeter" vertex="1">
+          <mxGeometry height="30" width="400" x="384" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="G-01" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;fontSize=12;fontColor=#666666;" value="Firmware (32 KB Flash)" vertex="1">
+          <mxGeometry height="400" width="340" x="80" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="G-02" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=0;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;fontSize=12;fontColor=#666666;" value="MCU (PIC32CM3204GV00064)" vertex="1">
+          <mxGeometry height="160" width="340" x="80" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="G-03" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;fontSize=12;fontColor=#666666;" value="External Peripherals" vertex="1">
+          <mxGeometry height="320" width="340" x="480" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="C-01" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;Firmware Application&lt;/b&gt;&lt;br&gt;&lt;br&gt;[C (bare-metal)]&lt;br&gt;&lt;br&gt;Main application code: app + services" vertex="1">
+          <mxGeometry height="90" width="260" x="120" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="C-02" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;HAL Layer&lt;/b&gt;&lt;br&gt;&lt;br&gt;[C]&lt;br&gt;&lt;br&gt;Hardware abstraction interfaces" vertex="1">
+          <mxGeometry height="90" width="260" x="120" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="C-03" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;MCC Drivers&lt;/b&gt;&lt;br&gt;&lt;br&gt;[C (generated)]&lt;br&gt;&lt;br&gt;Microchip Code Configurator drivers" vertex="1">
+          <mxGeometry height="90" width="260" x="120" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="C-04" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;fontColor=#000000;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;MCU Hardware&lt;/b&gt;&lt;br&gt;&lt;br&gt;[PIC32CM3204]&lt;br&gt;&lt;br&gt;ARM Cortex-M0+, 48 MHz, 32KB/4KB" vertex="1">
+          <mxGeometry height="90" width="260" x="120" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="C-05" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;fontColor=#000000;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;MCP3204 ADC&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External IC]&lt;br&gt;&lt;br&gt;12-bit SPI ADC for resistance measurement" vertex="1">
+          <mxGeometry height="90" width="260" x="520" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="C-06" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;fontColor=#000000;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;RNBD350 Module&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External IC]&lt;br&gt;&lt;br&gt;Bluetooth Low Energy module" vertex="1">
+          <mxGeometry height="90" width="260" x="520" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="E-01" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;BLE Client App&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Generic BLE terminal or PC GUI receiving JSON data" vertex="1">
+          <mxGeometry height="90" width="240" x="880" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="E-02" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;strokeWidth=2;fontColor=#FFFFFF;align=center;verticalAlign=middle;spacingTop=0;spacingBottom=0;fontSize=13;" value="&lt;b&gt;Debug Terminal&lt;/b&gt;&lt;br&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;Serial terminal for diagnostic output" vertex="1">
+          <mxGeometry height="90" width="240" x="544" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-01-02" edge="1" parent="1" source="C-01" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" target="C-02">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-01-02" connectable="0" parent="edge-01-02" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" value="Calls HAL APIs&lt;br&gt;[C function calls]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="60" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-02-03" edge="1" parent="1" source="C-02" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" target="C-03">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-02-03" connectable="0" parent="edge-02-03" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" value="Calls MCC APIs&lt;br&gt;[C function calls]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="60" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-03-04" edge="1" parent="1" source="C-03" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" target="C-04">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-03-04" connectable="0" parent="edge-03-04" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" value="Accesses registers&lt;br&gt;[Memory-mapped I/O]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="70" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-04-05" edge="1" parent="1" source="C-04" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" target="C-05">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-04-05" connectable="0" parent="edge-04-05" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" value="Reads ADC&lt;br&gt;[SPI (1 MHz, SERCOM5)]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-04-06" edge="1" parent="1" source="C-04" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" target="C-06">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="628" />
+              <mxPoint x="460" y="735" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-04-06" connectable="0" parent="edge-04-06" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" value="BLE communication&lt;br&gt;[UART (115200, SERCOM0)]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="10" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-04-E02" edge="1" parent="1" source="C-04" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" target="E-02">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430.08" y="582.54" />
+              <mxPoint x="430.08" y="520.08" />
+              <mxPoint x="544.08" y="520.08" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="label-04-E02" connectable="0" parent="edge-04-E02" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" value="Diagnostic output&lt;br&gt;[UART (115200, SERCOM2)]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint x="-90" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-06-E01" edge="1" parent="1" source="C-06" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#1168BD;strokeWidth=2;fontSize=10;fontColor=#666666;" target="E-01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-06-E01" connectable="0" parent="edge-06-E01" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontStyle=2;fontColor=#666666;" value="Streams JSON&lt;br&gt;[BLE transparent UART]" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="2" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;dashed=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=5;" value="" vertex="1">
+          <mxGeometry height="140" width="240" x="80" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#333333;" value="&lt;b&gt;Legend&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="100" x="90" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-sw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="20" width="30" x="90" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-sw-text" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" value="Container (SW)" vertex="1">
+          <mxGeometry height="30" width="120" x="130" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-hw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#78A8D8;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="20" width="30" x="90" y="795" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-hw-text" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" value="Container (HW)" vertex="1">
+          <mxGeometry height="30" width="120" x="130" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-ext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="20" width="30" x="90" y="825" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-ext-text" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#333333;" value="External System" vertex="1">
+          <mxGeometry height="30" width="120" x="130" y="820" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

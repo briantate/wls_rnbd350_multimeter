@@ -19,7 +19,7 @@
 |-------|-------------|--------|------|-------------|
 | **Phase 1** | Requirements Gathering | ✅ Complete | G1: Product Brief | ✅ Approved (2026-09-29) |
 | | | | G2: User Stories | ✅ Approved (2026-09-30) |
-| **Phase 2** | Architecture Design | In Progress | G3: Architecture | ⏳ Pending |
+| **Phase 2** | Architecture Design | ✅ Complete | G3: Architecture | ✅ Approved (2026-09-30) |
 | **Phase 3** | Test Planning | Not Started | G4: Test Plans | ⏳ Pending |
 | **Phase 4** | Scaffolding | Not Started | G5: Scaffolding | ⏳ Pending |
 | **Phase 5** | TDD Implementation | Not Started | G6: Module Reviews | ⏳ Pending |
@@ -48,8 +48,8 @@
 | 2 | Module Decomposition | `docs/architecture/module-decomposition.md` | ⏳ Not Started |
 | 2 | HAL Boundary | `docs/architecture/hal-boundary.md` | ⏳ Not Started |
 | 2 | Dependency Map | `docs/architecture/dependency-map.md` | ⏳ Not Started |
-| 2 | C4 Diagrams | `docs/architecture/diagrams/` | ⏳ Not Started |
-| 2 | ADRs | `docs/architecture/decisions/` | ⏳ Not Started |
+| 2 | C4 Diagrams | `docs/architecture/diagrams/` | ✅ Complete |
+| 2 | ADRs | `docs/architecture/adr/` | ✅ Complete |
 | 3 | Master Test Index | `docs/test-plan/unit-tests/master-index.md` | ⏳ Not Started |
 | 3 | Module Test Plans | `docs/test-plan/unit-tests/<module>/` | ⏳ Not Started |
 | 4 | Module Headers | `firmware/src/<module>/<module>.h` | ⏳ Not Started |
@@ -68,7 +68,7 @@
 |------|------|----------|---------|-----------------|
 | G1 | 2026-09-29 | Brian Tate | Approved | (verbal) |
 | G2 | 2026-09-30 | Brian Tate | Approved | (verbal) |
-| G3 | | | | |
+| G3 | 2026-09-30 | Brian Tate | Approved | (verbal) |
 | G4 | | | | |
 | G5 | | | | |
 | G6 | | | | |
