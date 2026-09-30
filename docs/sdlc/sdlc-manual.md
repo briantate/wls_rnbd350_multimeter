@@ -637,7 +637,7 @@ Submit module changes via **pull request** (PR) to document the review:
 > **Simulation tools to evaluate:**
 > - [Renode](https://renode.io/) — Open source, good ARM Cortex-M support
 > - QEMU — More general, requires BSP work
-> - Vendor simulators (MPLAB Simulator, STM32CubeIDE simulator)
+> - Vendor simulators (MPLAB Simulator, etc...)
 >
 > **Action item:** Create `.claude/skills/simulation-runner/SKILL.md` when simulation strategy is defined
 
@@ -1149,8 +1149,8 @@ Use this checklist to assess readiness for IEC 61508 compliance:
 
 ### 2.1 MCU/Processor
 - **Family:** [e.g., ARM Cortex-M4]
-- **Part Number:** [e.g., STM32F407VGT6]
-- **Clock Speed:** [e.g., 168 MHz]
+- **Part Number:** [e.g., SAMD21J18A]
+- **Clock Speed:** [e.g., 48 MHz]
 
 ### 2.2 Memory
 - **Flash:** [e.g., 1 MB]
@@ -1168,7 +1168,7 @@ Use this checklist to assess readiness for IEC 61508 compliance:
 - [ ] Other: [specify]
 
 ### 2.4 Development Board
-[e.g., STM32F4-Discovery, custom board]
+[e.g., SAMD21 Xplained Pro, custom board]
 
 ---
 
