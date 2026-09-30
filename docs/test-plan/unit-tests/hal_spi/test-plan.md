@@ -14,9 +14,8 @@ The `hal_spi` module provides SPI abstraction for MCP3204 ADC communication.
 
 **Public Interface:**
 ```c
-void    hal_spi_init(void);
-uint8_t hal_spi_transfer(uint8_t tx_byte);
-void    hal_spi_transfer_block(const uint8_t* tx, uint8_t* rx, size_t len);
+void hal_spi_init(void);
+void hal_spi_transfer(const uint8_t* tx, uint8_t* rx, size_t len);
 ```
 
 ---
@@ -33,20 +32,12 @@ void    hal_spi_transfer_block(const uint8_t* tx, uint8_t* rx, size_t len);
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-078 | Transfer byte | TX byte sent to driver | Expected |
-| TCI-079 | Transfer byte | RX byte returned | Expected |
-| TCI-080 | Full duplex | TX and RX occur simultaneously | Expected |
-
-### 2.3 hal_spi_transfer_block
-
-| Test ID | Scenario | Expected Result | Category |
-|---------|----------|-----------------|----------|
-| TCI-081 | Transfer multiple bytes | All TX bytes sent | Expected |
-| TCI-082 | Transfer multiple bytes | All RX bytes received | Expected |
-| TCI-083 | Zero length transfer | No operation, no CS toggle | Boundary |
-| TCI-084 | NULL rx buffer | TX only (ignores RX) | Expected |
-| TCI-107 | Transfer block | CS asserted before first byte | Expected |
-| TCI-108 | Transfer block | CS deasserted after last byte | Expected |
+| TCI-078 | Transfer multiple bytes | All TX bytes sent | Expected |
+| TCI-079 | Transfer multiple bytes | All RX bytes received | Expected |
+| TCI-080 | Zero length transfer | No operation, no CS toggle | Boundary |
+| TCI-081 | NULL rx buffer | TX only (ignores RX) | Expected |
+| TCI-082 | CS assertion | CS asserted before first byte | Expected |
+| TCI-083 | CS deassertion | CS deasserted after last byte | Expected |
 
 
 ---

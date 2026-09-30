@@ -33,10 +33,10 @@ Example: `AppState_OnConnect_WhenDisconnected_TransitionsToConnected`
 | led_svc | M-05 | 10 | 100% branch | Planned |
 | diag_svc | M-06 | 8 | 100% branch | Planned |
 | hal_gpio | M-07 | 10 | 100% branch | Planned |
-| hal_spi | M-08 | 10 | 100% branch | Planned |
+| hal_spi | M-08 | 7 | 100% branch | Planned |
 | hal_uart | M-09 | 14 | 100% branch | Planned |
 | hal_tick | M-10 | 8 | 100% branch | Planned |
-| **Total** | | **106** | | |
+| **Total** | | **103** | | |
 
 > **Note:** M-01 (main) is integration-tested, not unit-tested. Its logic is minimal (init + super-loop).
 
@@ -177,15 +177,12 @@ Example: `AppState_OnConnect_WhenDisconnected_TransitionsToConnected`
 | Test ID | Test Name | Traces To |
 |---------|-----------|-----------|
 | TCI-077 | HalSpi_Init_ConfiguresPeripheral | E1-002 |
-| TCI-078 | HalSpi_Transfer_SendsByte | E1-002 |
-| TCI-079 | HalSpi_Transfer_ReceivesByte | E1-002 |
-| TCI-080 | HalSpi_Transfer_FullDuplex | E1-002 |
-| TCI-081 | HalSpi_TransferBlock_SendsAllBytes | E1-002 |
-| TCI-082 | HalSpi_TransferBlock_ReceivesAllBytes | E1-002 |
-| TCI-083 | HalSpi_TransferBlock_ZeroLength_NoOp | E1-002 |
-| TCI-084 | HalSpi_TransferBlock_NullRx_SendsOnly | E1-002 |
-| TCI-107 | HalSpi_TransferBlock_AssertsCs | E1-002 |
-| TCI-108 | HalSpi_TransferBlock_DeassertsCs | E1-002 |
+| TCI-078 | HalSpi_Transfer_SendsAllBytes | E1-002 |
+| TCI-079 | HalSpi_Transfer_ReceivesAllBytes | E1-002 |
+| TCI-080 | HalSpi_Transfer_ZeroLength_NoOp | E1-002 |
+| TCI-081 | HalSpi_Transfer_NullRx_SendsOnly | E1-002 |
+| TCI-082 | HalSpi_Transfer_AssertsCs | E1-002 |
+| TCI-083 | HalSpi_Transfer_DeassertsCs | E1-002 |
 
 **Test Plan:** [hal_spi/test-plan.md](hal_spi/test-plan.md)
 

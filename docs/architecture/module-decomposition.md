@@ -368,8 +368,7 @@ void hal_gpio_toggle(hal_pin_t pin);
 **Public Interface:**
 ```c
 void    hal_spi_init(void);
-uint8_t hal_spi_transfer(uint8_t tx_byte);              // Single byte
-void    hal_spi_transfer_block(const uint8_t* tx, uint8_t* rx, size_t len);
+void hal_spi_transfer(const uint8_t* tx, uint8_t* rx, size_t len);
 ```
 
 **Owned Data:**

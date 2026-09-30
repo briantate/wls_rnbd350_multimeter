@@ -31,8 +31,8 @@ TEST_GROUP(MeasurementSvc)
         uint8_t high = (counts >> 8) & 0x0F;
         uint8_t low = counts & 0xFF;
 
-        // hal_spi_transfer_block handles CS internally
-        mock().expectOneCall("hal_spi_transfer_block")
+        // hal_spi_transfer handles CS internally
+        mock().expectOneCall("hal_spi_transfer")
               .ignoreOtherParameters();
         // Mock the response via out parameter or return buffer
     }
@@ -62,7 +62,7 @@ TEST(MeasurementSvc, Init_ConfiguresRangeGpios)
 TEST(MeasurementSvc, Sample_ReadsAdcViaHal)
 {
     // Arrange
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
 
     // Act
@@ -76,7 +76,7 @@ TEST(MeasurementSvc, Sample_ReadsAdcViaHal)
 TEST(MeasurementSvc, Sample_ConvertsCountsToOhms)
 {
     // Arrange: Mock SPI to return mid-range counts (2048)
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
     // Implementation will parse response buffer
 
@@ -91,7 +91,7 @@ TEST(MeasurementSvc, Sample_ConvertsCountsToOhms)
 TEST(MeasurementSvc, Sample_ReturnsValidMeasurement)
 {
     // Arrange
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
 
     // Act
@@ -105,7 +105,7 @@ TEST(MeasurementSvc, Sample_ReturnsValidMeasurement)
 TEST(MeasurementSvc, Sample_ZeroCounts_ReturnsZeroOhms)
 {
     // Arrange: Mock SPI to return 0 counts
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
 
     // Act
@@ -119,7 +119,7 @@ TEST(MeasurementSvc, Sample_ZeroCounts_ReturnsZeroOhms)
 TEST(MeasurementSvc, Sample_MaxCounts_ReturnsMaxOhms)
 {
     // Arrange: Mock SPI to return 4095 counts
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
 
     // Act
@@ -133,7 +133,7 @@ TEST(MeasurementSvc, Sample_MaxCounts_ReturnsMaxOhms)
 TEST(MeasurementSvc, Sample_MidCounts_ReturnsCorrectOhms)
 {
     // Arrange: Mock SPI to return 1024 counts (1/4 of max)
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
 
     // Act
@@ -149,7 +149,7 @@ TEST(MeasurementSvc, Sample_SendsCorrectSpiCommand)
     // Arrange: Verify TX buffer contains MCP3204 command
     // Command byte: 0x06 = Start bit + single-ended + channel 2
     uint8_t expected_tx[] = {0x06, 0x00, 0x00};
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .withMemoryBufferParameter("tx", expected_tx, 3)
           .ignoreOtherParameters();
 
@@ -164,7 +164,7 @@ TEST(MeasurementSvc, Sample_Channel2Selected)
 {
     // Arrange: Channel 2 = 0x06 for MCP3204 single-ended
     // Bits: 0000 0110 = start(1) + single(1) + D2(0) + D1(1) + D0(0)
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
 
     // Act
@@ -177,7 +177,7 @@ TEST(MeasurementSvc, Sample_Channel2Selected)
 TEST(MeasurementSvc, Sample_SpiError_ReturnsInvalid)
 {
     // Arrange: Simulate SPI failure via mock
-    mock().expectOneCall("hal_spi_transfer_block")
+    mock().expectOneCall("hal_spi_transfer")
           .ignoreOtherParameters();
     // Mock indicates failure in some way
 
@@ -192,7 +192,7 @@ TEST(MeasurementSvc, Sample_SpiError_ReturnsInvalid)
 TEST(MeasurementSvc, Sample_MultipleConsecutive_WorksCorrectly)
 {
     // Arrange & Act & Assert for sample 1
-    mock().expectOneCall("hal_spi_transfer_block").ignoreOtherParameters();
+    mock().expectOneCall("hal_spi_transfer").ignoreOtherParameters();
     measurement_t m1 = measurement_svc_sample();
     CHECK_TRUE(m1.valid);
 
@@ -200,7 +200,7 @@ TEST(MeasurementSvc, Sample_MultipleConsecutive_WorksCorrectly)
     mock().clear();
 
     // Arrange & Act & Assert for sample 2
-    mock().expectOneCall("hal_spi_transfer_block").ignoreOtherParameters();
+    mock().expectOneCall("hal_spi_transfer").ignoreOtherParameters();
     measurement_t m2 = measurement_svc_sample();
     CHECK_TRUE(m2.valid);
 }
@@ -209,7 +209,7 @@ TEST(MeasurementSvc, Sample_MultipleConsecutive_WorksCorrectly)
 TEST(MeasurementSvc, Sample_TimingWithinBudget)
 {
     // Arrange
-    mock().expectOneCall("hal_spi_transfer_block").ignoreOtherParameters();
+    mock().expectOneCall("hal_spi_transfer").ignoreOtherParameters();
 
     // Act
     // Note: Actual timing test would use hal_tick_get_ms()

@@ -169,7 +169,7 @@ void hal_gpio_toggle(hal_pin_t pin);
 
 ### 5.2 hal_spi.h
 
-**Purpose:** Abstract SPI master operations for MCP3204 ADC and future SPI devices.
+**Purpose:** Abstract SPI master operations for MCP3204 ADC.
 
 ```c
 #ifndef HAL_SPI_H
@@ -179,56 +179,34 @@ void hal_gpio_toggle(hal_pin_t pin);
 #include <stddef.h>
 
 /**
- * @brief SPI channel identifiers
- */
-typedef enum {
-    HAL_SPI_ADC,        /**< SERCOM5: MCP3204 ADC */
-    HAL_SPI_COUNT       /**< Number of channels */
-} hal_spi_channel_t;
-
-/**
- * @brief Initialize a SPI channel
- * @param ch    Channel to initialize
+ * @brief Initialize SPI peripheral
  * @pre   System clocks initialized
- * @post  SPI configured per channel settings (clock, mode, bit order)
- * @note  Chip select managed separately via hal_gpio
+ * @post  SPI configured (SERCOM5, 1 MHz, Mode 0, MSB first)
  */
-void hal_spi_init(hal_spi_channel_t ch);
+void hal_spi_init(void);
 
 /**
- * @brief Transfer a single byte (simultaneous TX and RX)
- * @param ch        Channel to use
- * @param tx_byte   Byte to transmit
- * @return          Byte received during transfer
- * @note  Blocking; returns when transfer complete
- */
-uint8_t hal_spi_transfer(hal_spi_channel_t ch, uint8_t tx_byte);
-
-/**
- * @brief Transfer a block of bytes
- * @param ch        Channel to use
- * @param tx_buf    Pointer to transmit buffer (may be NULL for RX-only)
+ * @brief Transfer bytes with automatic chip select management
+ * @param tx_buf    Pointer to transmit buffer
  * @param rx_buf    Pointer to receive buffer (may be NULL for TX-only)
  * @param len       Number of bytes to transfer
- * @note  Blocking; returns when all bytes transferred
+ * @note  Blocking; asserts CS before first byte, deasserts after last byte
+ * @note  If len is 0, no transfer occurs and CS is not toggled
  */
-void hal_spi_transfer_block(hal_spi_channel_t ch, const uint8_t* tx_buf, uint8_t* rx_buf, size_t len);
+void hal_spi_transfer(const uint8_t* tx_buf, uint8_t* rx_buf, size_t len);
 
 #endif /* HAL_SPI_H */
 ```
 
-**SPI Channel Configuration:**
+**SPI Configuration:**
 
-| Channel       | SERCOM   | Clock Rate | Mode              | Bit Order | Purpose                |
-|---------------|----------|------------|-------------------|-----------|------------------------|
-| HAL_SPI_ADC   | SERCOM5  | 1 MHz      | 0 (CPOL=0, CPHA=0)| MSB first | MCP3204 ADC            |
-
-**Adding a New SPI Device:**
-
-1. Add channel to `hal_spi_channel_t` enum (e.g., `HAL_SPI_EEPROM`)
-2. Add chip select pin to `hal_pin_t` in `hal_gpio.h`
-3. Document channel configuration in table above
-4. Implement channel handling in target HAL
+| Parameter | Value |
+|-----------|-------|
+| Peripheral | SERCOM5 |
+| Clock Rate | 1 MHz |
+| Mode | 0 (CPOL=0, CPHA=0) |
+| Bit Order | MSB first |
+| Chip Select | HAL_PIN_SPI_CS (managed internally) |
 
 ---
 
