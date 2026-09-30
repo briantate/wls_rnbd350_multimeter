@@ -107,6 +107,8 @@ The firmware requires hardware abstraction to enable:
 
 Four peripherals need abstraction: GPIO, SPI, UART, Timer.
 
+**Note on "Synchronous":** The HAL API is synchronous from the caller's perspective (no callbacks, no async completion tokens). However, the *implementation* may use ISRs and internal buffers to prevent data loss. Specifically, UART RX uses interrupt-driven reception into ring buffers, but the API remains poll-based (`hal_uart_rx_available()`, `hal_uart_rx_byte()`).
+
 ### Forces and Constraints
 
 | Force | Weight | Notes |
@@ -121,11 +123,11 @@ Four peripherals need abstraction: GPIO, SPI, UART, Timer.
 
 **Option A: Thin synchronous HAL**
 - Simple function-per-operation API (e.g., `hal_gpio_write()`)
-- All functions blocking/synchronous
-- No internal buffering or state
-- Mock implementation trivial
-- Pros: Simple, fast to implement, easy to test
-- Cons: No async/DMA support; limited scalability
+- API is synchronous (no callbacks); implementation may use ISRs internally
+- UART RX uses ISR + ring buffer to prevent data loss from async events
+- Mock implementation trivial (ring buffer behavior easy to simulate)
+- Pros: Simple API, fast to implement, easy to test, handles async RX reliably
+- Cons: No async/DMA support for TX; limited scalability
 
 **Option B: Thick HAL with callbacks**
 - Callback-based async API
@@ -143,11 +145,12 @@ Four peripherals need abstraction: GPIO, SPI, UART, Timer.
 **Option A: Thin synchronous HAL**
 
 Rationale:
-1. All operations complete in microseconds; async not needed
-2. Mock implementations become trivial stubs
+1. API operations complete synchronously from caller's view; no callback complexity
+2. Mock implementations remain trivial (inject RX data, capture TX data)
 3. Fastest to implement given timeline
 4. MCP3204 SPI transfer is inherently blocking (24-bit exchange)
 5. UART TX can be polling without impacting 100 ms budget
+6. UART RX uses ISR + ring buffer internally to handle async BLE events reliably
 
 ### Consequences
 
@@ -155,6 +158,7 @@ Rationale:
 - High-throughput serial not possible (acceptable for this use case)
 - Porting requires only reimplementing 4 small modules
 - Testing isolated from hardware completely
+- UART RX ring buffers add ~96 bytes RAM (64 + 32 per channel) to static allocation
 
 ---
 
@@ -317,8 +321,9 @@ Rationale:
    - BLE RX parse buffer: 32 bytes
    - JSON TX buffer: 48 bytes
    - Diagnostic TX buffer: 128 bytes
-   - UART RX ring buffers: 2 x 32 bytes
-2. Total static allocation ~300 bytes; well under 4 KB
+   - UART RX ring buffers: 64 bytes (BLE) + 32 bytes (DIAG) = 96 bytes
+   - Ring buffer metadata: ~8 bytes per channel (head/tail/flags)
+2. Total static allocation ~320 bytes; well under 4 KB
 3. Linker map provides exact memory usage at build time
 4. No heap means no fragmentation or allocation failures
 5. Easier to certify for reliability

@@ -525,7 +525,7 @@ void     hal_tick_advance_ms(uint32_t ms); // Mock only: simulate time passing
 | M-04     | 80                | RX buffer (32) + TX buffer (48)    |
 | M-05     | 8                 | Timer + state                      |
 | M-06     | 128               | Format buffer                      |
-| M-09     | 64                | RX ring buffers (2 x 32)           |
+| M-09     | 112               | RX ring buffers (64 BLE + 32 DIAG) + metadata |
 | M-10     | 8                 | Tick counter + flag                |
 | Stack    | ~512              | Worst-case call depth              |
-| **Total**| **~812**          | Well under 4 KB SRAM budget        |
+| **Total**| **~860**          | Well under 4 KB SRAM budget        |

@@ -169,7 +169,7 @@ void hal_gpio_toggle(hal_pin_t pin);
 
 ### 5.2 hal_spi.h
 
-**Purpose:** Abstract SPI master operations for MCP3204 ADC communication.
+**Purpose:** Abstract SPI master operations for MCP3204 ADC and future SPI devices.
 
 ```c
 #ifndef HAL_SPI_H
@@ -179,42 +179,56 @@ void hal_gpio_toggle(hal_pin_t pin);
 #include <stddef.h>
 
 /**
- * @brief Initialize SPI peripheral
+ * @brief SPI channel identifiers
+ */
+typedef enum {
+    HAL_SPI_ADC,        /**< SERCOM5: MCP3204 ADC */
+    HAL_SPI_COUNT       /**< Number of channels */
+} hal_spi_channel_t;
+
+/**
+ * @brief Initialize a SPI channel
+ * @param ch    Channel to initialize
  * @pre   System clocks initialized
- * @post  SPI configured: 1 MHz clock, Mode 0 (CPOL=0, CPHA=0), MSB first
+ * @post  SPI configured per channel settings (clock, mode, bit order)
  * @note  Chip select managed separately via hal_gpio
  */
-void hal_spi_init(void);
+void hal_spi_init(hal_spi_channel_t ch);
 
 /**
  * @brief Transfer a single byte (simultaneous TX and RX)
+ * @param ch        Channel to use
  * @param tx_byte   Byte to transmit
  * @return          Byte received during transfer
  * @note  Blocking; returns when transfer complete
  */
-uint8_t hal_spi_transfer(uint8_t tx_byte);
+uint8_t hal_spi_transfer(hal_spi_channel_t ch, uint8_t tx_byte);
 
 /**
  * @brief Transfer a block of bytes
+ * @param ch        Channel to use
  * @param tx_buf    Pointer to transmit buffer (may be NULL for RX-only)
  * @param rx_buf    Pointer to receive buffer (may be NULL for TX-only)
  * @param len       Number of bytes to transfer
  * @note  Blocking; returns when all bytes transferred
  */
-void hal_spi_transfer_block(const uint8_t* tx_buf, uint8_t* rx_buf, size_t len);
+void hal_spi_transfer_block(hal_spi_channel_t ch, const uint8_t* tx_buf, uint8_t* rx_buf, size_t len);
 
 #endif /* HAL_SPI_H */
 ```
 
-**SPI Configuration:**
+**SPI Channel Configuration:**
 
-| Parameter    | Value           | Source                    |
-|--------------|-----------------|---------------------------|
-| Clock rate   | 1 MHz           | MCP3204 datasheet limit   |
-| Mode         | 0 (CPOL=0, CPHA=0) | MCP3204 requirement    |
-| Bit order    | MSB first       | MCP3204 requirement       |
-| Chip select  | Manual via GPIO | Allows multi-byte framing |
-| SERCOM       | SERCOM5         | Hardware design           |
+| Channel       | SERCOM   | Clock Rate | Mode              | Bit Order | Purpose                |
+|---------------|----------|------------|-------------------|-----------|------------------------|
+| HAL_SPI_ADC   | SERCOM5  | 1 MHz      | 0 (CPOL=0, CPHA=0)| MSB first | MCP3204 ADC            |
+
+**Adding a New SPI Device:**
+
+1. Add channel to `hal_spi_channel_t` enum (e.g., `HAL_SPI_EEPROM`)
+2. Add chip select pin to `hal_pin_t` in `hal_gpio.h`
+3. Document channel configuration in table above
+4. Implement channel handling in target HAL
 
 ---
 
@@ -296,6 +310,86 @@ uint8_t hal_uart_rx_byte(hal_uart_channel_t ch);
 
 **Channel Isolation Rule:** SERCOM0 traffic is NEVER mixed with SERCOM2. BLE data only on BLE channel; diagnostics only on DIAG channel.
 
+**RX Implementation: ISR + Ring Buffer**
+
+UART RX uses interrupt-driven reception with ring buffers to prevent data loss from asynchronous BLE events:
+
+```
+   Incoming byte
+        │
+        v
+  ┌─────────────┐
+  │  UART RX    │  ISR fires on each received byte
+  │  Interrupt  │
+  └─────────────┘
+        │
+        v
+  ┌─────────────┐
+  │ Ring Buffer │  ISR pushes byte; O(1), no blocking
+  │  (per ch)   │
+  └─────────────┘
+        │
+        v (polled by main loop)
+  ┌─────────────┐
+  │ hal_uart_   │  Application polls via HAL API
+  │ rx_byte()   │
+  └─────────────┘
+```
+
+**Ring Buffer Sizing:**
+
+| Channel       | Buffer Size | Rationale |
+|---------------|-------------|-----------|
+| HAL_UART_BLE  | 64 bytes    | Covers longest RNBD350 status message (~20 bytes) plus margin for back-to-back events |
+| HAL_UART_DIAG | 32 bytes    | RX optional; small buffer for potential future commands |
+
+**Why ISR + Ring Buffer:**
+- At 115200 baud, a byte arrives every ~87 µs
+- Main loop iteration may take 5+ ms during measurement
+- Without buffering, ~57 bytes could be lost per loop iteration
+- RNBD350 sends unsolicited events: `%CONNECT%`, `%DISCONNECT%`, `%STREAM_OPEN%`, etc.
+
+**Implementation Notes:**
+- ISR must be minimal: read data register, push to buffer, clear flag
+- Ring buffer uses head/tail indices; no malloc
+- Buffers are statically allocated per ADR-0005
+
+**Overflow Behavior: Drop New Data**
+
+When the ring buffer is full, new incoming bytes are **discarded** (not written):
+
+```c
+// ISR pseudo-code
+void SERCOM0_RX_ISR(void) {
+    uint8_t byte = SERCOM0->DATA;
+    if (ring_buffer_full(&rx_buf_ble)) {
+        overflow_flag_ble = true;  // Set flag, discard byte
+    } else {
+        ring_buffer_push(&rx_buf_ble, byte);
+    }
+}
+```
+
+**Why drop (not overwrite):**
+1. ISR stays O(1) - no complex head adjustment
+2. Protects message integrity - won't corrupt data app is mid-read
+3. Overflow flag signals design problem (buffer undersized or loop too slow)
+4. BLE status messages will repeat; transient loss is recoverable
+
+**Overflow recovery:** Application checks `hal_uart_rx_overflow()`, logs diagnostic, clears flag. If critical state is uncertain, re-query BLE module status.
+
+**Additional HAL Function for Overflow Detection:**
+
+```c
+/**
+ * @brief Check and clear RX overflow flag
+ * @param ch    Channel to check
+ * @return      true if overflow occurred since last check
+ * @note        Clears flag after reading
+ */
+bool hal_uart_rx_overflow(hal_uart_channel_t ch);
+```
+
 ---
 
 ### 5.4 hal_tick.h
@@ -335,22 +429,6 @@ bool hal_tick_check_flag(void);
  */
 void hal_tick_clear_flag(void);
 
-/* ========== Mock-only functions ========== */
-#ifdef HAL_MOCK
-
-/**
- * @brief Advance simulated time (mock implementation only)
- * @param ms    Milliseconds to advance
- */
-void hal_tick_advance_ms(uint32_t ms);
-
-/**
- * @brief Reset tick counter to zero (mock implementation only)
- */
-void hal_tick_reset(void);
-
-#endif /* HAL_MOCK */
-
 #endif /* HAL_TICK_H */
 ```
 
@@ -383,24 +461,47 @@ void hal_tick_reset(void);
 ```
 test/
   mocks/
-    hal_gpio_mock.c     # GPIO mock with state tracking
-    hal_spi_mock.c      # SPI mock with configurable responses
-    hal_uart_mock.c     # UART mock with TX capture, RX injection
-    hal_tick_mock.c     # Tick mock with time control
+    hal_gpio_mock.h     # GPIO test helpers (inject reads, verify writes)
+    hal_gpio_mock.c     # GPIO mock implementation
+    hal_spi_mock.h      # SPI test helpers (inject RX, capture TX)
+    hal_spi_mock.c      # SPI mock implementation
+    hal_uart_mock.h     # UART test helpers (inject RX, capture TX, overflow)
+    hal_uart_mock.c     # UART mock implementation
+    hal_tick_mock.h     # Tick test helpers (advance time, set flag)
+    hal_tick_mock.c     # Tick mock implementation
 ```
+
+**Mock Header Pattern:**
+
+Each mock has a separate header for test-only functions, keeping the public HAL headers clean:
+
+```c
+// hal_tick_mock.h - test code includes this
+#include "hal_tick.h"  // Real API
+
+// Test control functions (not in public header)
+void hal_tick_mock_advance_ms(uint32_t ms);
+void hal_tick_mock_reset(void);
+void hal_tick_mock_set_flag(void);
+```
+
+Test files include the `*_mock.h` header to access both the real API and test helpers. Production code only includes the public `hal_*.h` headers.
 
 ### 7.2 Mock Capabilities
 
 | HAL Module | Mock Capability |
 |------------|-----------------|
 | hal_gpio   | Track pin states; verify writes; inject reads |
-| hal_spi    | Configurable RX data; capture TX data |
-| hal_uart   | Capture TX strings; inject RX sequences |
+| hal_spi    | Per-channel configurable RX data; per-channel TX capture |
+| hal_uart   | Per-channel TX capture; per-channel RX injection |
 | hal_tick   | Control time advancement; trigger tick flags |
 
-### 7.3 Example Mock Usage (hal_uart)
+### 7.3 Example Mock Usage
 
+**UART (hal_uart_mock.h):**
 ```c
+#include "hal_uart_mock.h"  // Includes hal_uart.h + test helpers
+
 // In test setup
 hal_uart_mock_inject_rx(HAL_UART_BLE, "%STREAM_OPEN%\r\n");
 
@@ -411,6 +512,23 @@ assert(event == BLE_EVENT_STREAM_OPEN);
 // Verify TX
 const char* tx = hal_uart_mock_get_tx(HAL_UART_BLE);
 assert(strstr(tx, "Meter") != NULL);
+```
+
+**Tick (hal_tick_mock.h):**
+```c
+#include "hal_tick_mock.h"  // Includes hal_tick.h + test helpers
+
+// Test LED blink timing
+hal_tick_mock_reset();
+led_svc_init();
+
+hal_tick_mock_advance_ms(500);
+led_svc_update();
+assert(hal_gpio_mock_get_state(HAL_PIN_LED) == true);
+
+hal_tick_mock_advance_ms(500);
+led_svc_update();
+assert(hal_gpio_mock_get_state(HAL_PIN_LED) == false);
 ```
 
 ---
