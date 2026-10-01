@@ -9,7 +9,7 @@
 ## Current Status
 
 **Current Phase:** Phase 5 — TDD Implementation  
-**Next Action:** Continue TDD for remaining modules (ble_svc next)
+**Next Action:** Continue TDD for remaining modules (led_svc next)
 
 ---
 
@@ -56,8 +56,8 @@
 | 4 | Module Sources (stubs) | `firmware/src/<module>/<module>.c` | ✅ Complete |
 | 4 | Build System (CMake) | `firmware/CMakeLists.txt` | ✅ Complete |
 | 4 | HAL Mocks | `firmware/tests/mocks/` | ✅ Complete |
-| 5 | Unit Tests | `firmware/tests/<module>/` | 🔄 In Progress (24/109 tests, 2/9 modules) |
-| 5 | Implemented Modules | `firmware/src/<module>/` | 🔄 In Progress (2/9 modules) |
+| 5 | Unit Tests | `firmware/tests/<module>/` | 🔄 In Progress (46/99 tests, 3/9 modules) |
+| 5 | Implemented Modules | `firmware/src/<module>/` | 🔄 In Progress (3/9 modules) |
 | 5 | Traceability Matrix | `docs/requirements/traceability-matrix.md` | 🔄 In Progress |
 | 6 | Integration Tests | `firmware/tests/integration/` | ⏳ Not Started |
 | 7 | Release Binary | `build/release/` | ⏳ Not Started |
@@ -82,13 +82,13 @@
 
 ## Module Implementation Status
 
-**Overall Progress:** 24/109 tests complete (22%)
+**Overall Progress:** 46/99 tests complete (46%)
 
 | Module | Layer | Tests | Status | Date |
 |--------|-------|-------|--------|------|
 | app_state | Application | 12/12 ✅ | Complete | 2026-10-01 |
 | measurement_svc | Service | 12/12 ✅ | Complete | 2026-10-01 |
-| ble_svc | Service | 0/27 | Not Started | |
+| ble_svc | Service | 22/22 ✅ | Complete | 2026-10-01 |
 | led_svc | Service | 0/13 | Not Started | |
 | diag_svc | Service | 0/11 | Not Started | |
 | hal_gpio | HAL | 0/15 | Not Started | |
@@ -102,13 +102,13 @@
 
 1. ~~**Implement app_state** — TDD complete (12/12 tests)~~ ✅
 2. ~~**Implement measurement_svc** — TDD complete (12/12 tests)~~ ✅
-3. **Implement ble_svc** — Service layer, 27 tests planned (next up)
-4. **Implement led_svc** — Service layer, 13 tests planned
+3. ~~**Implement ble_svc** — TDD complete (22/22 tests)~~ ✅
+4. **Implement led_svc** — Service layer, 13 tests planned (next up)
 5. **Implement diag_svc** — Service layer, 11 tests planned
 6. **Implement HAL modules** — hal_gpio (15), hal_spi (8), hal_uart (18), hal_tick (5)
 7. **Review each module** — **Gate G6** (per-module reviews)
 8. Proceed to integration testing
 
 **Recommended Module Order (top-down TDD):**
-1. ble_svc → led_svc → diag_svc (service layer)
+1. ~~ble_svc~~ → led_svc → diag_svc (service layer)
 2. hal_gpio → hal_spi → hal_uart → hal_tick (HAL layer)

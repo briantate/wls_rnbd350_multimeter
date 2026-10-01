@@ -39,6 +39,7 @@ target_link_libraries(hal_mocks
 set(TEST_SOURCES
     app_state/test_app_state.cpp
     measurement_svc/test_measurement_svc.cpp
+    ble_svc/test_ble_svc.cpp
 )
 
 # Unified test executable

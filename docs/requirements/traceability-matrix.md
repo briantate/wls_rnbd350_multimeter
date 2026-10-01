@@ -24,9 +24,9 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 | E2-006 | Handle BLE disconnect | app_state | TCI-001, TCI-009-010 | ✅ 3/3 Pass |
 | E1-002 | Read resistance from MCP3204 | measurement_svc, hal_spi | TCI-014, TCI-020-024 | ✅ 7/7 Pass |
 | E1-003 | Convert ADC counts to ohms | measurement_svc | TCI-015, TCI-017-019 | ✅ 4/4 Pass |
-| E2-002 | Initialize RNBD350 communication | ble_svc, hal_uart | — | ⏳ Not Started |
-| E2-003 | Parse RNBD350 status messages | ble_svc | — | ⏳ Not Started |
-| E2-005 | Format and transmit JSON | ble_svc | — | ⏳ Not Started |
+| E2-002 | Initialize RNBD350 communication | ble_svc, hal_uart | TCI-025 | ✅ 1/1 Pass |
+| E2-003 | Parse RNBD350 status messages | ble_svc | TCI-026-036, TCI-046 | ✅ 12/12 Pass |
+| E2-005 | Format and transmit JSON | ble_svc | TCI-037-042 | ✅ 6/6 Pass |
 | E3-002 | LED toggle 1 Hz (disconnected) | led_svc, hal_gpio | — | ⏳ Not Started |
 | E3-003 | LED toggle 5 Hz (connected) | led_svc, hal_gpio | — | ⏳ Not Started |
 | E4-002 | Diagnostic output on SERCOM2 | diag_svc, hal_uart | — | ⏳ Not Started |
@@ -78,11 +78,36 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 **Test File:** `firmware/tests/measurement_svc/test_measurement_svc.cpp`  
 **Coverage:** 12/12 tests passing (100%)
 
-### 3.3 ble_svc (M-04) — ⏳ Not Started
+### 3.3 ble_svc (M-04) — ✅ Complete
 
 | Test ID | Test Name | Function Under Test | User Story |
 |---------|-----------|---------------------|------------|
-| — | — | — | E2-002, E2-003, E2-005 |
+| TCI-025 | Init_ConfiguresUart | ble_svc_init | E2-002 |
+| TCI-026 | Poll_NoData_ReturnsNone | ble_svc_poll | E2-003 |
+| TCI-027 | Poll_ConnectMessage_ReturnsConnect | ble_svc_poll | E2-003 |
+| TCI-028 | Poll_DisconnectMessage_ReturnsDisconnect | ble_svc_poll | E2-003 |
+| TCI-029 | Poll_StreamOpenMessage_ReturnsStreamOpen | ble_svc_poll | E2-004 |
+| TCI-030 | Poll_PartialMessage_ReturnsNone | ble_svc_poll | E2-003 |
+| TCI-031 | Poll_FragmentedConnect_EventuallyReturnsConnect | ble_svc_poll | E2-003 |
+| TCI-032 | Poll_FragmentedDisconnect_EventuallyReturnsDisconnect | ble_svc_poll | E2-003 |
+| TCI-033 | Poll_FragmentedStreamOpen_EventuallyReturnsStreamOpen | ble_svc_poll | E2-004 |
+| TCI-034 | Poll_AdjacentMessages_ParsesBoth | ble_svc_poll | E2-003 |
+| TCI-035 | Poll_GarbageData_IgnoresAndContinues | ble_svc_poll | E2-003 |
+| TCI-036 | Poll_BufferOverflow_RecoversGracefully | ble_svc_poll | E2-003 |
+| TCI-037 | TransmitMeasurement_FormatsJson | ble_svc_transmit_measurement | E2-005 |
+| TCI-038 | TransmitMeasurement_CorrectJsonStructure | ble_svc_transmit_measurement | E2-005 |
+| TCI-039 | TransmitMeasurement_IncludesCrLf | ble_svc_transmit_measurement | E2-005 |
+| TCI-040 | TransmitMeasurement_ZeroOhms_FormatsCorrectly | ble_svc_transmit_measurement | E2-005 |
+| TCI-041 | TransmitMeasurement_MaxOhms_FormatsCorrectly | ble_svc_transmit_measurement | E2-005 |
+| TCI-042 | TransmitMeasurement_SendsViaUart | ble_svc_transmit_measurement | E2-005 |
+| TCI-043 | DiscardPending_ClearsTxBuffer | ble_svc_discard_pending | E2-006 |
+| TCI-044 | DiscardPending_ClearsRxBuffer | ble_svc_discard_pending | E2-006 |
+| TCI-045 | DiscardPending_ResetsParserState | ble_svc_discard_pending | E2-006 |
+| TCI-046 | Poll_ByteAtATime_AccumulatesCorrectly | ble_svc_poll | E2-003 |
+
+**Source File:** `firmware/src/services/ble_svc.c`  
+**Test File:** `firmware/tests/ble_svc/test_ble_svc.cpp`  
+**Coverage:** 22/22 tests passing (100%)
 
 ### 3.4 led_svc (M-05) — ⏳ Not Started
 
@@ -126,9 +151,9 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 
 | Category | Total | Implemented | Remaining |
 |----------|-------|-------------|-----------|
-| Modules | 9 | 2 | 7 |
-| Test Cases | 121 | 24 | 97 |
-| User Stories (Enabler) | 15 | 5 | 10 |
+| Modules | 9 | 3 | 6 |
+| Test Cases | 99 | 46 | 53 |
+| User Stories (Enabler) | 15 | 8 | 7 |
 
 ### Stories with Test Coverage
 
@@ -137,11 +162,13 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 | E1-002 | ✅ Covered by TCI-014, TCI-016, TCI-020-024 |
 | E1-003 | ✅ Covered by TCI-015, TCI-017-019 |
 | E1-004 | ✅ Covered by TCI-013 |
-| E2-004 | ✅ Covered by TCI-002 through TCI-008, TCI-011-012 |
-| E2-006 | ✅ Covered by TCI-001, TCI-009-010 |
+| E2-002 | ✅ Covered by TCI-025 |
+| E2-003 | ✅ Covered by TCI-026-036, TCI-046 |
+| E2-004 | ✅ Covered by TCI-002-008, TCI-011-012, TCI-029, TCI-033 |
+| E2-005 | ✅ Covered by TCI-037-042 |
+| E2-006 | ✅ Covered by TCI-001, TCI-009-010, TCI-043-045 |
 
 ### Stories Awaiting Test Coverage
-- E2-002, E2-003, E2-005 (ble_svc)
 - E3-002, E3-003 (led_svc)
 - E4-002, E4-003 (diag_svc)
 - E5-002, E5-003 (hal_tick)
@@ -157,7 +184,6 @@ None identified.
 ### Orphan Code (code without tests)
 | File | Status |
 |------|--------|
-| firmware/src/services/ble_svc.c | Stub only — awaiting TDD |
 | firmware/src/services/led_svc.c | Stub only — awaiting TDD |
 | firmware/src/services/diag_svc.c | Stub only — awaiting TDD |
 | firmware/src/hal/hal_gpio.c | Stub only — awaiting TDD |
@@ -170,6 +196,7 @@ None identified.
 |------|-------|------|
 | firmware/src/app/app_state.c | 12/12 | 2026-10-01 |
 | firmware/src/services/measurement_svc.c | 12/12 | 2026-10-01 |
+| firmware/src/services/ble_svc.c | 22/22 | 2026-10-01 |
 
 ---
 

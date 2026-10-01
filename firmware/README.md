@@ -37,21 +37,26 @@ make unit_tests <ModuleName>
 |--------|-------------|-------|
 | `AppState` | Application state machine (BLE connection state) | 12 |
 | `MeasurementSvc` | Resistance measurement acquisition and ADC conversion | 12 |
+| `BleSvc` | BLE service (RNBD350 UART parsing, JSON transmission) | 22 |
 
 ### Examples
 
 ```bash
-# Run all tests (24 total)
+# Run all tests (46 total)
 make unit_tests
-# Output: OK (24 tests, 24 ran, 57 checks, 0 ignored, 0 filtered out, 0 ms)
+# Output: OK (46 tests, 46 ran, 785 checks, 0 ignored, 0 filtered out, 5 ms)
 
 # Run only AppState tests
 make unit_tests AppState
-# Output: OK (24 tests, 12 ran, 17 checks, 0 ignored, 12 filtered out, 0 ms)
+# Output: OK (46 tests, 12 ran, 17 checks, 0 ignored, 34 filtered out, 0 ms)
 
 # Run only MeasurementSvc tests
 make unit_tests MeasurementSvc
-# Output: OK (24 tests, 12 ran, 40 checks, 0 ignored, 12 filtered out, 0 ms)
+# Output: OK (46 tests, 12 ran, 40 checks, 0 ignored, 34 filtered out, 0 ms)
+
+# Run only BleSvc tests
+make unit_tests BleSvc
+# Output: OK (46 tests, 22 ran, 728 checks, 0 ignored, 24 filtered out, 3 ms)
 ```
 
 ### Test Output Format
