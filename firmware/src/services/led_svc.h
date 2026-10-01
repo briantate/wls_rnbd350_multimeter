@@ -21,10 +21,11 @@ void led_svc_init(void);
 /**
  * @brief Update LED blink state.
  *
- * Toggles LED based on elapsed time and connection state.
+ * Toggles LED based on current tick and connection state.
+ * Uses subtraction-based timing for overflow safety.
  *
- * @param elapsed_ms Milliseconds since last call.
+ * @param current_tick_ms Current system tick in milliseconds (e.g., from hal_tick_get_ms()).
  */
-void led_svc_update(uint32_t elapsed_ms);
+void led_svc_update(uint32_t current_tick_ms);
 
 #endif  /* BTOHM_SERVICES_LED_SVC_H_ */

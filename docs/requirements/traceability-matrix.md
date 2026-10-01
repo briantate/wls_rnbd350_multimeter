@@ -27,8 +27,8 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 | E2-002 | Initialize RNBD350 communication | ble_svc, hal_uart | TCI-025 | ✅ 1/1 Pass |
 | E2-003 | Parse RNBD350 status messages | ble_svc | TCI-026-036, TCI-046 | ✅ 12/12 Pass |
 | E2-005 | Format and transmit JSON | ble_svc | TCI-037-042 | ✅ 6/6 Pass |
-| E3-002 | LED toggle 1 Hz (disconnected) | led_svc, hal_gpio | — | ⏳ Not Started |
-| E3-003 | LED toggle 5 Hz (connected) | led_svc, hal_gpio | — | ⏳ Not Started |
+| E3-002 | LED toggle 1 Hz (disconnected) | led_svc, hal_gpio | TCI-047-051, TCI-055-056 | ✅ 7/7 Pass |
+| E3-003 | LED toggle 5 Hz (streaming) | led_svc, hal_gpio | TCI-049, TCI-052-054 | ✅ 4/4 Pass |
 | E4-002 | Diagnostic output on SERCOM2 | diag_svc, hal_uart | — | ⏳ Not Started |
 | E5-002 | Sample at 100 ms interval | hal_tick | — | ⏳ Not Started |
 
@@ -109,11 +109,24 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 **Test File:** `firmware/tests/ble_svc/test_ble_svc.cpp`  
 **Coverage:** 22/22 tests passing (100%)
 
-### 3.4 led_svc (M-05) — ⏳ Not Started
+### 3.4 led_svc (M-05) — ✅ Complete
 
 | Test ID | Test Name | Function Under Test | User Story |
 |---------|-----------|---------------------|------------|
-| — | — | — | E3-002, E3-003 |
+| TCI-047 | Init_TurnsLedOff | led_svc_init | E3-002 |
+| TCI-048 | Update_WhenDisconnected_TogglesAt1000ms | led_svc_update | E3-002 |
+| TCI-049 | Update_WhenStreaming_TogglesAt200ms | led_svc_update | E3-003 |
+| TCI-050 | Update_Before1000ms_NoToggle | led_svc_update | E3-002 |
+| TCI-051 | Update_At1000ms_Toggles | led_svc_update | E3-002 |
+| TCI-052 | Update_Before200ms_NoToggle | led_svc_update | E3-003 |
+| TCI-053 | Update_At200ms_Toggles | led_svc_update | E3-003 |
+| TCI-054 | Update_StateChangesMidCycle_AdjustsRate | led_svc_update | E3-002, E3-003 |
+| TCI-055 | Update_AccumulatesElapsedTime | led_svc_update | E3-002 |
+| TCI-056 | Update_ResetsAfterToggle | led_svc_update | E3-002 |
+
+**Source File:** `firmware/src/services/led_svc.c`  
+**Test File:** `firmware/tests/led_svc/test_led_svc.cpp`  
+**Coverage:** 10/10 tests passing (100%)
 
 ### 3.5 diag_svc (M-06) — ⏳ Not Started
 
@@ -151,9 +164,9 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 
 | Category | Total | Implemented | Remaining |
 |----------|-------|-------------|-----------|
-| Modules | 9 | 3 | 6 |
-| Test Cases | 99 | 46 | 53 |
-| User Stories (Enabler) | 15 | 8 | 7 |
+| Modules | 9 | 4 | 5 |
+| Test Cases | 99 | 56 | 43 |
+| User Stories (Enabler) | 15 | 10 | 5 |
 
 ### Stories with Test Coverage
 
@@ -167,9 +180,10 @@ Per the SDLC manual (Section 10), traceability ensures every requirement is test
 | E2-004 | ✅ Covered by TCI-002-008, TCI-011-012, TCI-029, TCI-033 |
 | E2-005 | ✅ Covered by TCI-037-042 |
 | E2-006 | ✅ Covered by TCI-001, TCI-009-010, TCI-043-045 |
+| E3-002 | ✅ Covered by TCI-047-051, TCI-055-056 |
+| E3-003 | ✅ Covered by TCI-049, TCI-052-054 |
 
 ### Stories Awaiting Test Coverage
-- E3-002, E3-003 (led_svc)
 - E4-002, E4-003 (diag_svc)
 - E5-002, E5-003 (hal_tick)
 - E6-001, E6-002, E6-003 (technical/NFR — verified by architecture)
@@ -184,7 +198,6 @@ None identified.
 ### Orphan Code (code without tests)
 | File | Status |
 |------|--------|
-| firmware/src/services/led_svc.c | Stub only — awaiting TDD |
 | firmware/src/services/diag_svc.c | Stub only — awaiting TDD |
 | firmware/src/hal/hal_gpio.c | Stub only — awaiting TDD |
 | firmware/src/hal/hal_spi.c | Stub only — awaiting TDD |
@@ -197,6 +210,7 @@ None identified.
 | firmware/src/app/app_state.c | 12/12 | 2026-10-01 |
 | firmware/src/services/measurement_svc.c | 12/12 | 2026-10-01 |
 | firmware/src/services/ble_svc.c | 22/22 | 2026-10-01 |
+| firmware/src/services/led_svc.c | 10/10 | 2026-10-01 |
 
 ---
 

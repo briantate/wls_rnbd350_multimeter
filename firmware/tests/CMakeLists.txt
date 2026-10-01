@@ -40,6 +40,7 @@ set(TEST_SOURCES
     app_state/test_app_state.cpp
     measurement_svc/test_measurement_svc.cpp
     ble_svc/test_ble_svc.cpp
+    led_svc/test_led_svc.cpp
 )
 
 # Unified test executable
