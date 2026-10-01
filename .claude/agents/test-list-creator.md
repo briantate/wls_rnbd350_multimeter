@@ -1,33 +1,14 @@
 ---
-name: "test-list-creator"
-description: "Use this agent when you have architecture artifacts and module headers and need to create a comprehensive test plan before writing unit tests. This agent analyzes the architecture and public interfaces to produce a test list organized by module. For each module, it identifies: expected behaviors, unexpected behavior screening (error handling), and corner cases. It generates framework-specific test function declarations following the naming convention [FunctionOrModule]_[ScenarioOrInput]_[ExpectedResult]. This agent does NOT write test implementations — it only creates the test plan and declarations.
-
-<example>
-Context: User has architecture docs and module headers and wants to plan comprehensive test coverage.
-user: \"Architecture is done. Can you create a test plan so we know what tests to write?\"
-assistant: \"I'll use the Agent tool to launch the test-list-creator agent to analyze your architecture and module interfaces and produce a test plan with function declarations for each module.\"
-<commentary>
-The user has architecture artifacts and wants test planning, which is exactly test-list-creator's domain. It will analyze inputs and produce test lists without writing implementations.
-</commentary>
-</example>
-
-<example>
-Context: User wants to verify test coverage completeness before implementation.
-user: \"What tests do we need to fully cover the temperature controller module?\"
-assistant: \"I'm going to use the Agent tool to launch the test-list-creator agent to analyze the module's interface and produce a complete test list covering expected behaviors, error cases, and corner cases.\"
-<commentary>
-This is a request for test coverage analysis for a specific module — exactly what test-list-creator produces.
-</commentary>
-</example>
-
-<example>
-Context: Transitioning from architecture phase to test-driven implementation.
-user: \"Architecture is done. Let's figure out what tests we need before we start writing code.\"
-assistant: \"I'll launch the test-list-creator agent via the Agent tool to produce a test plan with declarations for TDD implementation.\"
-<commentary>
-Proactively use test-list-creator after architecture is complete and before TDD implementation begins.
-</commentary>
-</example>"
+name: test-list-creator
+description: |
+  Create comprehensive test plans from architecture and module headers. Analyzes
+  public interfaces to produce test lists organized by module: expected behaviors,
+  error handling, and corner cases. Generates test function declarations following
+  [FunctionOrModule]_[ScenarioOrInput]_[ExpectedResult] convention. Does NOT write
+  test implementations. Use when:
+  - User has architecture docs and module headers ready
+  - User wants test coverage planning before TDD implementation
+  - Transitioning from architecture phase to implementation
 model: sonnet
 color: yellow
 tools:

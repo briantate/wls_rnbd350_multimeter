@@ -18,7 +18,7 @@ void hal_spi_init(void)
 void hal_spi_transfer(const uint8_t* tx, uint8_t* rx, size_t len)
 {
     mock().actualCall("hal_spi_transfer")
-          .withParameter("tx", tx)
+          .withMemoryBufferParameter("tx", tx, len)
           .withOutputParameter("rx", rx)
           .withParameter("len", (int)len);
 }

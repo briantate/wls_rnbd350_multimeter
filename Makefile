@@ -86,11 +86,30 @@ mccabe_analysis:
 #######################################
 # Unit Tests (CMake-based)
 #######################################
+# Usage:
+#   make unit_tests                   - run all tests
+#   make unit_tests AppState          - run only AppState tests
+#   make unit_tests MeasurementSvc    - run only MeasurementSvc tests
+
+# Extract group filter from command line (word after unit_tests)
+TEST_GROUP := $(word 2,$(MAKECMDGOALS))
+
+# Prevent make from treating the group name as a target
+ifneq ($(TEST_GROUP),)
+$(TEST_GROUP):
+	@:
+endif
+
 .PHONY: unit_tests
 unit_tests:
-	@mkdir -p $(TEST_DIR)/build
-	@cd $(TEST_DIR)/build && cmake -DCPPUTEST_HOME=/home/cpputest -DENABLE_COVERAGE=ON .. > /dev/null
-	@cd $(TEST_DIR)/build && cmake --build . --target unit_tests
+	@mkdir -p $(FIRMWARE_DIR)/build
+	@cd $(FIRMWARE_DIR)/build && cmake -DBUILD_TESTING=ON .. > /dev/null 2>&1
+	@cd $(FIRMWARE_DIR)/build && cmake --build . --target test_all > /dev/null
+ifneq ($(TEST_GROUP),)
+	@cd $(FIRMWARE_DIR)/build/tests && ./test_all -v -g $(TEST_GROUP)
+else
+	@cd $(FIRMWARE_DIR)/build/tests && ./test_all -v
+endif
 
 #######################################
 # Unit Tests (Make-based) - legacy

@@ -21,7 +21,7 @@ app_state_t app_state_get(void)
 
 void app_state_on_connect(void)
 {
-    if (s_current_state == APP_STATE_DISCONNECTED) {
+    if (s_current_state != APP_STATE_STREAMING) {
         s_current_state = APP_STATE_CONNECTED;
     }
 }
@@ -40,5 +40,5 @@ void app_state_on_disconnect(void)
 
 bool app_state_is_streaming(void)
 {
-    return s_current_state == APP_STATE_STREAMING;
+    return (s_current_state == APP_STATE_STREAMING);
 }

@@ -13,12 +13,21 @@
 
 void measurement_svc_init(void)
 {
-    /* TODO: Configure range selection GPIOs */
+    hal_gpio_write(HAL_PIN_RES_A, false);
+    hal_gpio_write(HAL_PIN_RES_B, false);
+    hal_gpio_write(HAL_PIN_RES_C, false);
 }
 
 measurement_t measurement_svc_sample(void)
 {
-    measurement_t result = {0, false};
-    /* TODO: Read ADC and convert to ohms */
+    uint8_t tx[3] = {0x06, 0x00, 0x00};
+    uint8_t rx[3] = {0};
+
+    hal_spi_transfer(tx, rx, 3);
+
+    uint16_t counts = ((rx[1] & 0x0F) << 8) | rx[2];
+    uint32_t ohms = (counts * 10000U) / 4095U;
+
+    measurement_t result = {ohms, true};
     return result;
 }

@@ -1,9 +1,9 @@
 # Master Test Index
 
 **Project:** Bluetooth Ohmmeter Firmware  
-**Version:** 1.2  
-**Date:** 2026-09-30  
-**Status:** Draft
+**Version:** 1.3  
+**Date:** 2026-10-01  
+**Status:** In Progress
 
 ---
 
@@ -27,16 +27,16 @@ Example: `AppState_OnConnect_WhenDisconnected_TransitionsToConnected`
 
 | Module | ID | Test Count | Coverage Target | Status |
 |--------|-----|------------|-----------------|--------|
-| app_state | M-02 | 12 | 100% branch | Planned |
-| measurement_svc | M-03 | 12 | 100% branch | Planned |
-| ble_svc | M-04 | 22 | 100% branch | Planned |
-| led_svc | M-05 | 10 | 100% branch | Planned |
-| diag_svc | M-06 | 8 | 100% branch | Planned |
-| hal_gpio | M-07 | 10 | 100% branch | Planned |
-| hal_spi | M-08 | 7 | 100% branch | Planned |
-| hal_uart | M-09 | 14 | 100% branch | Planned |
-| hal_tick | M-10 | 4 | 100% branch | Planned |
-| **Total** | | **99** | | |
+| app_state | M-02 | 12 | 100% branch | ✅ Complete |
+| measurement_svc | M-03 | 12 | 100% branch | ✅ Complete |
+| ble_svc | M-04 | 27 | 100% branch | Planned |
+| led_svc | M-05 | 13 | 100% branch | Planned |
+| diag_svc | M-06 | 11 | 100% branch | Planned |
+| hal_gpio | M-07 | 15 | 100% branch | Planned |
+| hal_spi | M-08 | 8 | 100% branch | Planned |
+| hal_uart | M-09 | 18 | 100% branch | Planned |
+| hal_tick | M-10 | 5 | 100% branch | Planned |
+| **Total** | | **121** | | **24 done (20%)** |
 
 > **Note:** M-01 (main) is integration-tested, not unit-tested. Its logic is minimal (init + super-loop).
 
@@ -284,3 +284,4 @@ Modules should be implemented and tested top-down, driven by application needs:
 | 2026-09-30 | 1.0 | Brian Tate | Initial creation |
 | 2026-09-30 | 1.1 | Brian Tate | Moved SPI CS management to hal_spi; simplified hal_spi to single transfer function; fixed hal_uart_rx_byte to return bool with output param; simplified hal_tick to init/get_ms only; changed test order to top-down TDD |
 | 2026-09-30 | 1.2 | Brian Tate | Renumbered all tests sequentially (TCI-001 to TCI-099); updated traceability matrix |
+| 2026-10-01 | 1.3 | Claude | Updated test counts from test plans (total 121); marked app_state and measurement_svc complete |

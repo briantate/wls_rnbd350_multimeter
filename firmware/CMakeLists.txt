@@ -25,11 +25,10 @@ set(HAL_SOURCES
     src/hal/hal_tick.c
 )
 
-# Library for testing (excludes main.c)
+# Library for testing (excludes main.c and HAL for mocking)
 add_library(firmware_lib STATIC
     ${APP_SOURCES}
     ${SERVICE_SOURCES}
-    ${HAL_SOURCES}
 )
 
 target_include_directories(firmware_lib PUBLIC

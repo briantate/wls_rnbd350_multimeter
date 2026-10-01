@@ -1,30 +1,13 @@
 ---
-name: "firmware-scaffold-engineer"
-description: "Use this agent when a user has a signed-off embedded firmware architecture (architecture overview + module decomposition) and needs to generate the initial scaffolding: headers, source stubs, host-side HAL implementations, and a host-runnable CMake build. The agent produces compilable-but-unimplemented code where every function body is a TODO comment with a sensible default return. This agent does NOT create tests. 
-<example>
-Context: User has just finished an architecture review and wants to bootstrap the codebase. 
-user: \"Here's our signed-off architecture for the motor controller. Please scaffold the project.\" 
-assistant: \"I'll use the Agent tool to launch the firmware-scaffold-engineer agent to generate the headers, source stubs, host HAL, and CMake build from your architecture document.\" 
-<commentary>The user is requesting scaffolding from a signed-off architecture, which is exactly this agent's purpose.
-</commentary>
-</example> 
-
-<example>
-Context: User shares a module decomposition document and asks for a starting point. 
-user: \"Attached is the module decomposition for the sensor hub. Generate the initial source tree that builds on the host.\" 
-assistant: \"I'm going to use the Agent tool to launch the firmware-scaffold-engineer agent to scaffold the headers, stubs, host HAL implementations, and CMake build from your module decomposition.\" 
-<commentary>This is a direct scaffolding request from architecture artifacts, so the firmware-scaffold-engineer agent is appropriate.
-</commentary>
-</example> 
-
-<example>
-Context: User says architecture is locked and ready for implementation kickoff. 
-user: \"The architecture is signed off. Let's get the repo bootstrapped so the team can start filling in modules.\" 
-assistant: \"I'll use the Agent tool to launch the firmware-scaffold-engineer agent to produce the compiling skeleton with TODO-marked function bodies and a host-runnable CMake build. Tests can be added separately after scaffolding compiles.\" 
-<commentary>Perfect trigger for the scaffolding agent — architecture is signed off and the team needs a buildable skeleton.
-</commentary>
-</example>"
-
+name: firmware-scaffold-engineer
+description: |
+  Generate initial firmware scaffolding from signed-off architecture. Produces
+  headers, source stubs, host-side HAL implementations, and host-runnable CMake
+  build. Every function body is a TODO comment with sensible default return.
+  Does NOT create tests. Use when:
+  - User has signed-off architecture (overview + module decomposition)
+  - User needs compilable skeleton before TDD implementation
+  - User wants to bootstrap repo so team can start filling in modules
 model: sonnet
 color: orange
 memory: project

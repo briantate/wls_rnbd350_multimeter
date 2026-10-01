@@ -1,5 +1,6 @@
-
 # ble_multimeter
+
+Bluetooth Low Energy wireless resistance measurement firmware.
 
 ## Structure
 
@@ -11,3 +12,64 @@
 | .vscode\settings.json             | Workspace specific settings                                                                                                         |
 | .vscode\ble_multimeter.mplab.json | The MPLAB project file, should not be deleted                                                                                       |
 | out                               | Final build artifacts                                                                                                               |
+| src/                              | Production source code (modules organized by layer)                                                                                 |
+| tests/                            | Unit tests (CppUTest)                                                                                                               |
+
+---
+
+## Unit Tests
+
+Unit tests use [CppUTest](https://cpputest.github.io/) and run inside the project's Docker container.
+
+### Running Tests
+
+```bash
+# Run all unit tests
+make unit_tests
+
+# Run tests for a specific module
+make unit_tests <ModuleName>
+```
+
+### Available Test Modules
+
+| Module | Description | Tests |
+|--------|-------------|-------|
+| `AppState` | Application state machine (BLE connection state) | 12 |
+| `MeasurementSvc` | Resistance measurement acquisition and ADC conversion | 12 |
+
+### Examples
+
+```bash
+# Run all tests (24 total)
+make unit_tests
+# Output: OK (24 tests, 24 ran, 57 checks, 0 ignored, 0 filtered out, 0 ms)
+
+# Run only AppState tests
+make unit_tests AppState
+# Output: OK (24 tests, 12 ran, 17 checks, 0 ignored, 12 filtered out, 0 ms)
+
+# Run only MeasurementSvc tests
+make unit_tests MeasurementSvc
+# Output: OK (24 tests, 12 ran, 40 checks, 0 ignored, 12 filtered out, 0 ms)
+```
+
+### Test Output Format
+
+```
+TEST(GroupName, TestName) - <time> ms
+...
+OK (<total> tests, <ran> ran, <checks> checks, <ignored> ignored, <filtered> filtered out, <time> ms)
+```
+
+### Adding New Test Modules
+
+1. Create test file: `tests/<module>/test_<module>.cpp`
+2. Add to `tests/CMakeLists.txt`:
+   ```cmake
+   set(TEST_SOURCES
+       ...
+       <module>/test_<module>.cpp
+   )
+   ```
+3. Run `make unit_tests` to rebuild and run

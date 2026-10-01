@@ -1,24 +1,12 @@
 ---
-name: "tdd-module-implementer"
-description: "Use this agent to implement a complete module using strict Test Driven Development. Given a test plan markdown file and test declarations file, this agent executes the full RED-GREEN TDD cycle for every test in ONE module. It brings in tests one at a time from the declarations file, verifies each test fails, writes the minimum implementation to pass, and verifies the test passes before moving to the next test.
-
-<example>
-Context: User has a test plan and declarations file for the temp_ctrl module and wants to implement it using TDD.
-user: \"Can you implement the temp_ctrl module using TDD? The test plan is in docs/test-plan/unit-tests/temp_ctrl/\"
-assistant: \"I'll use the Agent tool to launch the tdd-module-implementer agent to implement the temp_ctrl module following strict TDD practices - one test at a time.\"
-<commentary>
-The user has test artifacts ready and wants full TDD implementation of a module. This agent will methodically work through each test in the declarations file.
-</commentary>
-</example>
-
-<example>
-Context: User wants to continue TDD implementation of a partially complete module.
-user: \"Continue the TDD implementation for the bme280 module. We stopped at test TCB-015.\"
-assistant: \"I'll launch the tdd-module-implementer agent to continue the TDD cycle for bme280, picking up from where you left off.\"
-<commentary>
-The agent can resume TDD work on a partially implemented module by checking which tests already pass and continuing from there.
-</commentary>
-</example>"
+name: tdd-module-implementer
+description: |
+  Implement a complete module using strict Test Driven Development. Given a test
+  plan and test declarations file, executes the full RED-GREEN TDD cycle for every
+  test in ONE module - one test at a time. Use when:
+  - User has test-plan.md and test-declarations.cpp ready for a module
+  - User wants strict TDD implementation (red-green-refactor)
+  - User wants to continue TDD on a partially complete module
 model: sonnet
 color: green
 tools:
@@ -27,6 +15,7 @@ tools:
   - Edit
   - Glob
   - Grep
+  - Bash
   - PowerShell
   - Skill
   - AskUserQuestion
