@@ -8,8 +8,8 @@
 
 ## Current Status
 
-**Current Phase:** Phase 3 — Test Planning  
-**Next Action:** Generate master test index and module test plans
+**Current Phase:** Phase 5 — TDD Implementation  
+**Next Action:** Write failing tests, then implement modules top-down
 
 ---
 
@@ -20,9 +20,9 @@
 | **Phase 1** | Requirements Gathering | ✅ Complete | G1: Product Brief | ✅ Approved (2026-09-29) |
 | | | | G2: User Stories | ✅ Approved (2026-09-30) |
 | **Phase 2** | Architecture Design | ✅ Complete | G3: Architecture | ✅ Approved (2026-09-30) |
-| **Phase 3** | Test Planning | Not Started | G4: Test Plans | ⏳ Pending |
-| **Phase 4** | Scaffolding | Not Started | G5: Scaffolding | ⏳ Pending |
-| **Phase 5** | TDD Implementation | Not Started | G6: Module Reviews | ⏳ Pending |
+| **Phase 3** | Test Planning | ✅ Complete | G4: Test Plans | ✅ Approved (2026-09-30) |
+| **Phase 4** | Scaffolding | ✅ Complete | G5: Scaffolding | ✅ Approved (2026-09-30) |
+| **Phase 5** | TDD Implementation | 🔄 In Progress | G6: Module Reviews | ⏳ Pending |
 | **Phase 6** | Integration & System Testing | Not Started | G7: Integration | ⏳ Pending |
 | **Phase 7** | Release | Not Started | G8: Release | ⏳ Pending |
 
@@ -52,8 +52,10 @@
 | 2 | ADRs | `docs/architecture/adr/` | ✅ Complete |
 | 3 | Master Test Index | `docs/test-plan/unit-tests/master-index.md` | ✅ Complete |
 | 3 | Module Test Plans | `docs/test-plan/unit-tests/<module>/` | ✅ Complete |
-| 4 | Module Headers | `firmware/src/<module>/<module>.h` | ⏳ Not Started |
-| 4 | Module Sources (stubs) | `firmware/src/<module>/<module>.c` | ⏳ Not Started |
+| 4 | Module Headers | `firmware/src/<module>/<module>.h` | ✅ Complete |
+| 4 | Module Sources (stubs) | `firmware/src/<module>/<module>.c` | ✅ Complete |
+| 4 | Build System (CMake) | `firmware/CMakeLists.txt` | ✅ Complete |
+| 4 | HAL Mocks | `firmware/tests/mocks/` | ✅ Complete |
 | 5 | Unit Tests | `firmware/tests/<module>/` | ⏳ Not Started |
 | 5 | Implemented Modules | `firmware/src/<module>/` | ⏳ Not Started |
 | 6 | Integration Tests | `firmware/tests/integration/` | ⏳ Not Started |
@@ -69,8 +71,8 @@
 | G1 | 2026-09-29 | Brian Tate | Approved | (verbal) |
 | G2 | 2026-09-30 | Brian Tate | Approved | (verbal) |
 | G3 | 2026-09-30 | Brian Tate | Approved | (verbal) |
-| G4 | | | | |
-| G5 | | | | |
+| G4 | 2026-09-30 | Brian Tate | Approved | (verbal) |
+| G5 | 2026-09-30 | Brian Tate | Approved | (verbal) |
 | G6 | | | | |
 | G7 | | | | |
 | G8 | | | | |
@@ -79,6 +81,7 @@
 
 ## Next Steps
 
-1. **Generate master test index** — create `docs/test-plan/unit-tests/master-index.md`
-2. **Generate module test plans** — create test plans for each module in architecture
-3. Review and approve Test Plans — **Gate G4**
+1. **Write failing tests** — implement tests from test plans (top-down: app_state first)
+2. **Implement modules** — write code to pass tests
+3. **Review each module** — **Gate G6** (per-module reviews)
+4. Proceed to integration testing

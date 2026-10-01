@@ -26,19 +26,18 @@ void hal_spi_transfer(const uint8_t* tx, uint8_t* rx, size_t len);
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-077 | Call init | Configures SERCOM5 SPI peripheral | Expected |
+| TCI-075 | Call init | Configures SERCOM5 SPI peripheral | Expected |
 
 ### 2.2 hal_spi_transfer
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-078 | Transfer multiple bytes | All TX bytes sent | Expected |
-| TCI-079 | Transfer multiple bytes | All RX bytes received | Expected |
-| TCI-080 | Zero length transfer | No operation, no CS toggle | Boundary |
-| TCI-081 | NULL rx buffer | TX only (ignores RX) | Expected |
-| TCI-082 | CS assertion | CS asserted before first byte | Expected |
-| TCI-083 | CS deassertion | CS deasserted after last byte | Expected |
-
+| TCI-076 | Transfer multiple bytes | All TX bytes sent | Expected |
+| TCI-077 | Transfer multiple bytes | All RX bytes received | Expected |
+| TCI-078 | Zero length transfer | No operation, no CS toggle | Boundary |
+| TCI-079 | NULL rx buffer | TX only (ignores RX) | Expected |
+| TCI-080 | CS assertion | CS asserted before first byte | Expected |
+| TCI-081 | CS deassertion | CS deasserted after last byte | Expected |
 
 ---
 
@@ -58,6 +57,7 @@ void hal_spi_transfer(const uint8_t* tx, uint8_t* rx, size_t len);
 | Dependency | Mock Strategy |
 |------------|---------------|
 | MCC SPI driver | Mock on host; real on target |
+| hal_gpio (M-07) | Mock: verify CS pin writes |
 
 ---
 
@@ -65,7 +65,7 @@ void hal_spi_transfer(const uint8_t* tx, uint8_t* rx, size_t len);
 
 | Test ID | Enabler Story | Acceptance Criteria |
 |---------|---------------|---------------------|
-| TCI-077-084 | E1-002 | SPI communication with ADC |
+| TCI-075-081 | E1-002 | SPI communication with ADC |
 
 ---
 

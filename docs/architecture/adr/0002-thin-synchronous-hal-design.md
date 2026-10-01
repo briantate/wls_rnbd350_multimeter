@@ -22,7 +22,7 @@ Four peripherals require abstraction:
 | GPIO | LED control, status signals | `hal_gpio_write()`, `hal_gpio_read()` |
 | SPI | MCP3204 ADC communication | `hal_spi_transfer()` |
 | UART | BLE module and diagnostics | `hal_uart_tx()`, `hal_uart_rx_byte()`, `hal_uart_rx_available()` |
-| Timer | 100 ms tick generation | `hal_timer_init()`, `hal_tick_flag()` |
+| Timer | 1 ms timebase | `hal_tick_init()`, `hal_tick_get_ms()` |
 
 ### Definition of "Synchronous"
 
@@ -73,12 +73,11 @@ void hal_uart_tx_byte(hal_uart_t channel, uint8_t byte);
 void hal_uart_tx(hal_uart_t channel, const uint8_t* data, size_t len);
 bool hal_uart_tx_ready(hal_uart_t channel);
 bool hal_uart_rx_available(hal_uart_t channel);
-uint8_t hal_uart_rx_byte(hal_uart_t channel);
+bool hal_uart_rx_byte(hal_uart_t channel, uint8_t* byte);
 
 // Timer
-void hal_timer_init(void);
-bool hal_tick_flag(void);
-void hal_tick_clear(void);
+void hal_tick_init(void);
+uint32_t hal_tick_get_ms(void);
 ```
 
 ---

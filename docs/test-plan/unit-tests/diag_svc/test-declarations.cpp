@@ -45,7 +45,7 @@ TEST_GROUP(DiagSvc)
     }
 };
 
-/* TCI-059: diag_svc_init configures UART */
+/* TCI-057: diag_svc_init configures UART */
 TEST(DiagSvc, Init_ConfiguresUart)
 {
     // Arrange
@@ -58,7 +58,7 @@ TEST(DiagSvc, Init_ConfiguresUart)
     // Assert: mock verifies
 }
 
-/* TCI-060: Log formats timestamp */
+/* TCI-058: Log formats timestamp */
 TEST(DiagSvc, Log_FormatsTimestamp)
 {
     // Arrange
@@ -73,7 +73,7 @@ TEST(DiagSvc, Log_FormatsTimestamp)
     // Assert: timestamp appears in output
 }
 
-/* TCI-061: Log formats level */
+/* TCI-059: Log formats level */
 TEST(DiagSvc, Log_FormatsLevel)
 {
     // Arrange
@@ -88,7 +88,7 @@ TEST(DiagSvc, Log_FormatsLevel)
     // Assert: level appears in output
 }
 
-/* TCI-062: Log formats subsystem */
+/* TCI-060: Log formats subsystem */
 TEST(DiagSvc, Log_FormatsSubsystem)
 {
     // Arrange
@@ -103,7 +103,7 @@ TEST(DiagSvc, Log_FormatsSubsystem)
     // Assert: subsystem appears in output
 }
 
-/* TCI-063: Log formats message */
+/* TCI-061: Log formats message */
 TEST(DiagSvc, Log_FormatsMessage)
 {
     // Arrange
@@ -118,7 +118,7 @@ TEST(DiagSvc, Log_FormatsMessage)
     // Assert: message appears in output
 }
 
-/* TCI-064: Below verbosity produces no output */
+/* TCI-062: Below verbosity produces no output */
 TEST(DiagSvc, Log_BelowVerbosity_NoOutput)
 {
     // Arrange: Assume DIAG_VERBOSITY is DIAG_INFO (1)
@@ -138,7 +138,7 @@ TEST(DiagSvc, Log_BelowVerbosity_NoOutput)
     // Assert: No uart call expected for filtered messages
 }
 
-/* TCI-065: At verbosity produces output */
+/* TCI-063: At verbosity produces output */
 TEST(DiagSvc, Log_AtVerbosity_Outputs)
 {
     // Arrange: DIAG_VERBOSITY = DIAG_INFO
@@ -151,7 +151,7 @@ TEST(DiagSvc, Log_AtVerbosity_Outputs)
     // Assert: output produced
 }
 
-/* TCI-066: Above verbosity produces output */
+/* TCI-064: Above verbosity produces output */
 TEST(DiagSvc, Log_AboveVerbosity_Outputs)
 {
     // Arrange: ERROR (3) > INFO (1)

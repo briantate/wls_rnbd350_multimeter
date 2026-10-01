@@ -26,7 +26,7 @@ TEST_GROUP(HalGpio)
     }
 };
 
-/* TCI-067: hal_gpio_init configures pins */
+/* TCI-065: hal_gpio_init configures pins */
 TEST(HalGpio, Init_ConfiguresPins)
 {
     // Arrange: MCC driver calls expected
@@ -38,7 +38,7 @@ TEST(HalGpio, Init_ConfiguresPins)
     // Assert: MCC init called
 }
 
-/* TCI-068: Write to LED pin */
+/* TCI-066: Write to LED pin */
 TEST(HalGpio, Write_Led_SetsState)
 {
     // Arrange
@@ -52,7 +52,7 @@ TEST(HalGpio, Write_Led_SetsState)
     // Assert: driver called with correct pin
 }
 
-/* TCI-069: Write to RES_A pin */
+/* TCI-067: Write to RES_A pin */
 TEST(HalGpio, Write_ResA_SetsState)
 {
     // Arrange
@@ -65,7 +65,7 @@ TEST(HalGpio, Write_ResA_SetsState)
     // Assert: verified by mock
 }
 
-/* TCI-070: Write to RES_B pin */
+/* TCI-068: Write to RES_B pin */
 TEST(HalGpio, Write_ResB_SetsState)
 {
     // Arrange
@@ -78,7 +78,7 @@ TEST(HalGpio, Write_ResB_SetsState)
     // Assert: verified by mock
 }
 
-/* TCI-071: Write to RES_C pin */
+/* TCI-069: Write to RES_C pin */
 TEST(HalGpio, Write_ResC_SetsState)
 {
     // Arrange
@@ -91,7 +91,7 @@ TEST(HalGpio, Write_ResC_SetsState)
     // Assert: verified by mock
 }
 
-/* TCI-072: Write to SPI_CS pin */
+/* TCI-070: Write to SPI_CS pin */
 TEST(HalGpio, Write_SpiCs_SetsState)
 {
     // Arrange
@@ -104,7 +104,7 @@ TEST(HalGpio, Write_SpiCs_SetsState)
     // Assert: verified by mock
 }
 
-/* TCI-073: Read returns current state */
+/* TCI-071: Read returns current state */
 TEST(HalGpio, Read_ReturnsCurrentState)
 {
     // Arrange
@@ -119,7 +119,7 @@ TEST(HalGpio, Read_ReturnsCurrentState)
     CHECK_TRUE(state);
 }
 
-/* TCI-074: Toggle inverts state */
+/* TCI-072: Toggle inverts state */
 TEST(HalGpio, Toggle_InvertsState)
 {
     // Arrange
@@ -132,7 +132,7 @@ TEST(HalGpio, Toggle_InvertsState)
     // Assert: driver toggle called
 }
 
-/* TCI-075: Write invalid pin - no effect */
+/* TCI-073: Write invalid pin - no effect */
 TEST(HalGpio, Write_InvalidPin_NoEffect)
 {
     // Arrange: No driver call expected
@@ -144,7 +144,7 @@ TEST(HalGpio, Write_InvalidPin_NoEffect)
     // Assert: no crash, no driver call
 }
 
-/* TCI-076: Read invalid pin - returns false */
+/* TCI-074: Read invalid pin - returns false */
 TEST(HalGpio, Read_InvalidPin_ReturnsFalse)
 {
     // Arrange: No driver call expected

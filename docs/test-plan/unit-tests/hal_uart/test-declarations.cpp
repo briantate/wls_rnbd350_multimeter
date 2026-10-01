@@ -25,7 +25,7 @@ TEST_GROUP(HalUart)
     }
 };
 
-/* TCI-085: Init BLE channel */
+/* TCI-082: Init BLE channel */
 TEST(HalUart, Init_Ble_ConfiguresSercom0)
 {
     // Arrange
@@ -37,7 +37,7 @@ TEST(HalUart, Init_Ble_ConfiguresSercom0)
     // Assert: MCC init called
 }
 
-/* TCI-086: Init DIAG channel */
+/* TCI-083: Init DIAG channel */
 TEST(HalUart, Init_Diag_ConfiguresSercom2)
 {
     // Arrange
@@ -49,7 +49,7 @@ TEST(HalUart, Init_Diag_ConfiguresSercom2)
     // Assert: MCC init called
 }
 
-/* TCI-087: TX ready when buffer empty */
+/* TCI-084: TX ready when buffer empty */
 TEST(HalUart, TxReady_WhenReady_ReturnsTrue)
 {
     // Arrange
@@ -63,7 +63,7 @@ TEST(HalUart, TxReady_WhenReady_ReturnsTrue)
     CHECK_TRUE(ready);
 }
 
-/* TCI-088: TX not ready when buffer full */
+/* TCI-085: TX not ready when buffer full */
 TEST(HalUart, TxReady_WhenBusy_ReturnsFalse)
 {
     // Arrange
@@ -77,7 +77,7 @@ TEST(HalUart, TxReady_WhenBusy_ReturnsFalse)
     CHECK_FALSE(ready);
 }
 
-/* TCI-089: TX byte sends to driver */
+/* TCI-086: TX byte sends to driver */
 TEST(HalUart, TxByte_SendsByte)
 {
     // Arrange
@@ -90,7 +90,7 @@ TEST(HalUart, TxByte_SendsByte)
     // Assert: driver called with byte
 }
 
-/* TCI-090: TX string sends all characters */
+/* TCI-087: TX string sends all characters */
 TEST(HalUart, TxString_SendsAllChars)
 {
     // Arrange
@@ -103,7 +103,7 @@ TEST(HalUart, TxString_SendsAllChars)
     // Assert: both chars sent
 }
 
-/* TCI-091: TX string null-terminated */
+/* TCI-088: TX string null-terminated */
 TEST(HalUart, TxString_NullTerminated)
 {
     // Arrange: Only 3 chars expected, not the null
@@ -118,7 +118,7 @@ TEST(HalUart, TxString_NullTerminated)
     // Assert: only 3 calls, not 4
 }
 
-/* TCI-092: TX empty string - no bytes sent */
+/* TCI-089: TX empty string - no bytes sent */
 TEST(HalUart, TxString_EmptyString_NoOutput)
 {
     // Arrange
@@ -130,7 +130,7 @@ TEST(HalUart, TxString_EmptyString_NoOutput)
     // Assert: no driver calls
 }
 
-/* TCI-093: RX available when data present */
+/* TCI-090: RX available when data present */
 TEST(HalUart, RxAvailable_WhenData_ReturnsTrue)
 {
     // Arrange
@@ -144,7 +144,7 @@ TEST(HalUart, RxAvailable_WhenData_ReturnsTrue)
     CHECK_TRUE(avail);
 }
 
-/* TCI-094: RX not available when empty */
+/* TCI-091: RX not available when empty */
 TEST(HalUart, RxAvailable_WhenEmpty_ReturnsFalse)
 {
     // Arrange
@@ -158,36 +158,41 @@ TEST(HalUart, RxAvailable_WhenEmpty_ReturnsFalse)
     CHECK_FALSE(avail);
 }
 
-/* TCI-095: RX byte returns data */
-TEST(HalUart, RxByte_ReturnsByte)
+/* TCI-092: RX byte when data available */
+TEST(HalUart, RxByte_WhenData_ReturnsTrueAndOutputsByte)
 {
     // Arrange
+    mock().expectOneCall("SERCOM0_USART_ReceiverReady")
+          .andReturnValue(true);
     mock().expectOneCall("SERCOM0_USART_ReadByte")
           .andReturnValue(0xAA);
 
     // Act
-    uint8_t byte = hal_uart_rx_byte(HAL_UART_BLE);
+    uint8_t byte = 0xFF;
+    bool result = hal_uart_rx_byte(HAL_UART_BLE, &byte);
 
     // Assert
+    CHECK_TRUE(result);
     CHECK_EQUAL(0xAA, byte);
 }
 
-/* TCI-096: RX byte when empty returns 0 */
-TEST(HalUart, RxByte_WhenEmpty_ReturnsZero)
+/* TCI-093: RX byte when empty returns false */
+TEST(HalUart, RxByte_WhenEmpty_ReturnsFalseByteUnchanged)
 {
-    // Arrange: Simulate empty buffer
+    // Arrange
     mock().expectOneCall("SERCOM0_USART_ReceiverReady")
           .andReturnValue(false);
 
-    // Act: Implementation should check availability first
-    // or return 0 if no data
-    uint8_t byte = hal_uart_rx_byte(HAL_UART_BLE);
+    // Act
+    uint8_t byte = 0x55;  // Sentinel value
+    bool result = hal_uart_rx_byte(HAL_UART_BLE, &byte);
 
     // Assert
-    CHECK_EQUAL(0, byte);
+    CHECK_FALSE(result);
+    CHECK_EQUAL(0x55, byte);  // Unchanged
 }
 
-/* TCI-097: Invalid channel - no effect */
+/* TCI-094: Invalid channel - no effect */
 TEST(HalUart, InvalidChannel_NoEffect)
 {
     // Arrange
@@ -200,7 +205,7 @@ TEST(HalUart, InvalidChannel_NoEffect)
     // Assert: no crash, no driver call
 }
 
-/* TCI-098: Both channels independent */
+/* TCI-095: Both channels independent */
 TEST(HalUart, BothChannels_Independent)
 {
     // Arrange: Init both

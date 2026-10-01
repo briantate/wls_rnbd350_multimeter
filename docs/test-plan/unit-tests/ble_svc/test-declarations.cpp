@@ -34,35 +34,34 @@ TEST_GROUP(BleSvc)
     void injectRxString(const char* str)
     {
         for (int i = 0; str[i] != '\0'; i++) {
-            mock().expectOneCall("hal_uart_rx_available")
-                  .withParameter("ch", HAL_UART_BLE)
-                  .andReturnValue(true);
             mock().expectOneCall("hal_uart_rx_byte")
                   .withParameter("ch", HAL_UART_BLE)
-                  .andReturnValue((int)str[i]);
+                  .withOutputParameterReturning("byte", &str[i], sizeof(uint8_t))
+                  .andReturnValue(true);
         }
-        mock().expectOneCall("hal_uart_rx_available")
+        mock().expectOneCall("hal_uart_rx_byte")
               .withParameter("ch", HAL_UART_BLE)
+              .ignoreOtherParameters()
               .andReturnValue(false);
     }
 
     void injectRxByte(char c)
     {
-        mock().expectOneCall("hal_uart_rx_available")
+        mock().expectOneCall("hal_uart_rx_byte")
               .withParameter("ch", HAL_UART_BLE)
+              .withOutputParameterReturning("byte", &c, sizeof(uint8_t))
               .andReturnValue(true);
         mock().expectOneCall("hal_uart_rx_byte")
               .withParameter("ch", HAL_UART_BLE)
-              .andReturnValue((int)c);
-        mock().expectOneCall("hal_uart_rx_available")
-              .withParameter("ch", HAL_UART_BLE)
+              .ignoreOtherParameters()
               .andReturnValue(false);
     }
 
     void expectNoRxData()
     {
-        mock().expectOneCall("hal_uart_rx_available")
+        mock().expectOneCall("hal_uart_rx_byte")
               .withParameter("ch", HAL_UART_BLE)
+              .ignoreOtherParameters()
               .andReturnValue(false);
     }
 
@@ -73,7 +72,7 @@ TEST_GROUP(BleSvc)
     }
 };
 
-/* TCI-027: ble_svc_init */
+/* TCI-025: ble_svc_init */
 TEST(BleSvc, Init_ConfiguresUart)
 {
     // Arrange
@@ -86,7 +85,7 @@ TEST(BleSvc, Init_ConfiguresUart)
     // Assert: mock verifies
 }
 
-/* TCI-028: ble_svc_poll with no data */
+/* TCI-026: ble_svc_poll with no data */
 TEST(BleSvc, Poll_NoData_ReturnsNone)
 {
     // Arrange
@@ -99,7 +98,7 @@ TEST(BleSvc, Poll_NoData_ReturnsNone)
     CHECK_EQUAL(BLE_EVENT_NONE, event);
 }
 
-/* TCI-029: ble_svc_poll with CONNECT message */
+/* TCI-027: ble_svc_poll with CONNECT message */
 TEST(BleSvc, Poll_ConnectMessage_ReturnsConnect)
 {
     // Arrange
@@ -112,7 +111,7 @@ TEST(BleSvc, Poll_ConnectMessage_ReturnsConnect)
     CHECK_EQUAL(BLE_EVENT_CONNECT, event);
 }
 
-/* TCI-030: ble_svc_poll with DISCONNECT message */
+/* TCI-028: ble_svc_poll with DISCONNECT message */
 TEST(BleSvc, Poll_DisconnectMessage_ReturnsDisconnect)
 {
     // Arrange
@@ -125,7 +124,7 @@ TEST(BleSvc, Poll_DisconnectMessage_ReturnsDisconnect)
     CHECK_EQUAL(BLE_EVENT_DISCONNECT, event);
 }
 
-/* TCI-031: ble_svc_poll with STREAM_OPEN message */
+/* TCI-029: ble_svc_poll with STREAM_OPEN message */
 TEST(BleSvc, Poll_StreamOpenMessage_ReturnsStreamOpen)
 {
     // Arrange
@@ -138,7 +137,7 @@ TEST(BleSvc, Poll_StreamOpenMessage_ReturnsStreamOpen)
     CHECK_EQUAL(BLE_EVENT_STREAM_OPEN, event);
 }
 
-/* TCI-032: Partial message returns NONE */
+/* TCI-030: Partial message returns NONE */
 TEST(BleSvc, Poll_PartialMessage_ReturnsNone)
 {
     // Arrange
@@ -151,7 +150,7 @@ TEST(BleSvc, Poll_PartialMessage_ReturnsNone)
     CHECK_EQUAL(BLE_EVENT_NONE, event);
 }
 
-/* TCI-033: Fragmented CONNECT */
+/* TCI-031: Fragmented CONNECT */
 TEST(BleSvc, Poll_FragmentedConnect_EventuallyReturnsConnect)
 {
     // Arrange & Act: First fragment
@@ -166,7 +165,7 @@ TEST(BleSvc, Poll_FragmentedConnect_EventuallyReturnsConnect)
     CHECK_EQUAL(BLE_EVENT_CONNECT, event);
 }
 
-/* TCI-034: Fragmented DISCONNECT */
+/* TCI-032: Fragmented DISCONNECT */
 TEST(BleSvc, Poll_FragmentedDisconnect_EventuallyReturnsDisconnect)
 {
     // Arrange & Act: First fragment
@@ -181,7 +180,7 @@ TEST(BleSvc, Poll_FragmentedDisconnect_EventuallyReturnsDisconnect)
     CHECK_EQUAL(BLE_EVENT_DISCONNECT, event);
 }
 
-/* TCI-035: Fragmented STREAM_OPEN */
+/* TCI-033: Fragmented STREAM_OPEN */
 TEST(BleSvc, Poll_FragmentedStreamOpen_EventuallyReturnsStreamOpen)
 {
     // Arrange & Act: Byte by byte
@@ -197,7 +196,7 @@ TEST(BleSvc, Poll_FragmentedStreamOpen_EventuallyReturnsStreamOpen)
     }
 }
 
-/* TCI-036: Adjacent messages */
+/* TCI-034: Adjacent messages */
 TEST(BleSvc, Poll_AdjacentMessages_ParsesBoth)
 {
     // Arrange
@@ -211,7 +210,7 @@ TEST(BleSvc, Poll_AdjacentMessages_ParsesBoth)
     CHECK_EQUAL(BLE_EVENT_STREAM_OPEN, ble_svc_poll());
 }
 
-/* TCI-037: Garbage data ignored */
+/* TCI-035: Garbage data ignored */
 TEST(BleSvc, Poll_GarbageData_IgnoresAndContinues)
 {
     // Arrange: Garbage then valid message
@@ -224,7 +223,7 @@ TEST(BleSvc, Poll_GarbageData_IgnoresAndContinues)
     CHECK_EQUAL(BLE_EVENT_CONNECT, event);
 }
 
-/* TCI-038: Buffer overflow recovery */
+/* TCI-036: Buffer overflow recovery */
 TEST(BleSvc, Poll_BufferOverflow_RecoversGracefully)
 {
     // Arrange: Long garbage that exceeds buffer
@@ -242,7 +241,7 @@ TEST(BleSvc, Poll_BufferOverflow_RecoversGracefully)
     CHECK_EQUAL(BLE_EVENT_CONNECT, event);
 }
 
-/* TCI-039: transmit_measurement formats JSON */
+/* TCI-037: transmit_measurement formats JSON */
 TEST(BleSvc, TransmitMeasurement_FormatsJson)
 {
     // Arrange
@@ -256,7 +255,7 @@ TEST(BleSvc, TransmitMeasurement_FormatsJson)
     // Assert: mock verifies tx_string called
 }
 
-/* TCI-040: Correct JSON structure */
+/* TCI-038: Correct JSON structure */
 TEST(BleSvc, TransmitMeasurement_CorrectJsonStructure)
 {
     // Arrange: Capture the string
@@ -270,7 +269,7 @@ TEST(BleSvc, TransmitMeasurement_CorrectJsonStructure)
     // Assert: mock verifies exact string
 }
 
-/* TCI-041: Includes CR LF */
+/* TCI-039: Includes CR LF */
 TEST(BleSvc, TransmitMeasurement_IncludesCrLf)
 {
     // Arrange
@@ -284,7 +283,7 @@ TEST(BleSvc, TransmitMeasurement_IncludesCrLf)
     // Assert: verified by exact string match
 }
 
-/* TCI-042: Zero ohms */
+/* TCI-040: Zero ohms */
 TEST(BleSvc, TransmitMeasurement_ZeroOhms_FormatsCorrectly)
 {
     // Arrange
@@ -298,7 +297,7 @@ TEST(BleSvc, TransmitMeasurement_ZeroOhms_FormatsCorrectly)
     // Assert: verified by mock
 }
 
-/* TCI-043: Max ohms */
+/* TCI-041: Max ohms */
 TEST(BleSvc, TransmitMeasurement_MaxOhms_FormatsCorrectly)
 {
     // Arrange
@@ -312,7 +311,7 @@ TEST(BleSvc, TransmitMeasurement_MaxOhms_FormatsCorrectly)
     // Assert: doesn't crash, transmits something
 }
 
-/* TCI-044: Sends via UART */
+/* TCI-042: Sends via UART */
 TEST(BleSvc, TransmitMeasurement_SendsViaUart)
 {
     // Arrange
@@ -326,7 +325,7 @@ TEST(BleSvc, TransmitMeasurement_SendsViaUart)
     // Assert: mock verifies BLE channel used
 }
 
-/* TCI-045: discard_pending clears TX */
+/* TCI-043: discard_pending clears TX */
 TEST(BleSvc, DiscardPending_ClearsTxBuffer)
 {
     // Arrange: Put something in TX buffer
@@ -342,7 +341,7 @@ TEST(BleSvc, DiscardPending_ClearsTxBuffer)
     ble_svc_transmit_measurement(200);
 }
 
-/* TCI-046: discard_pending clears RX */
+/* TCI-044: discard_pending clears RX */
 TEST(BleSvc, DiscardPending_ClearsRxBuffer)
 {
     // Arrange: Partial message in RX
@@ -359,7 +358,7 @@ TEST(BleSvc, DiscardPending_ClearsRxBuffer)
     CHECK_EQUAL(BLE_EVENT_CONNECT, ble_svc_poll());
 }
 
-/* TCI-047: discard_pending resets parser */
+/* TCI-045: discard_pending resets parser */
 TEST(BleSvc, DiscardPending_ResetsParserState)
 {
     // Arrange: Parser in mid-parse state
@@ -376,7 +375,7 @@ TEST(BleSvc, DiscardPending_ResetsParserState)
     CHECK_EQUAL(BLE_EVENT_DISCONNECT, ble_svc_poll());
 }
 
-/* TCI-048: Byte at a time accumulation */
+/* TCI-046: Byte at a time accumulation */
 TEST(BleSvc, Poll_ByteAtATime_AccumulatesCorrectly)
 {
     // Arrange & Act: Each byte separately

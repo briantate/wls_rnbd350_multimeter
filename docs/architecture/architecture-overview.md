@@ -80,10 +80,10 @@ The main loop polls:
 
 | Mechanism       | Usage                                           |
 |-----------------|-------------------------------------------------|
-| ISR (TC0)       | Increments 1 ms tick counter; sets `tick_flag`  |
+| ISR (TC0)       | Increments 1 ms tick counter                    |
 | ISR (SERCOM0 RX)| Buffers incoming bytes from RNBD350             |
 | ISR (SERCOM2 TX)| Optional: background diagnostic TX (if used)    |
-| Main loop       | All application logic; polls flags/buffers      |
+| Main loop       | All application logic; polls timestamps/buffers |
 
 **ISR constraints:**
 - ISRs set flags only; no business logic

@@ -16,11 +16,6 @@ The `hal_tick` module provides a 1 ms system tick timebase for timing operations
 ```c
 void     hal_tick_init(void);
 uint32_t hal_tick_get_ms(void);
-bool     hal_tick_check_flag(void);
-void     hal_tick_clear_flag(void);
-
-// Mock only:
-void     hal_tick_advance_ms(uint32_t ms);
 ```
 
 ---
@@ -31,29 +26,15 @@ void     hal_tick_advance_ms(uint32_t ms);
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-099 | Call init | Starts TC0 timer | Expected |
+| TCI-096 | Call init | Starts TC0 timer | Expected |
 
 ### 2.2 hal_tick_get_ms
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-100 | After init | Returns milliseconds since boot | Expected |
-| TCI-101 | Over time | Value increments | Expected |
-
-### 2.3 hal_tick_check_flag / hal_tick_clear_flag
-
-| Test ID | Scenario | Expected Result | Category |
-|---------|----------|-----------------|----------|
-| TCI-102 | After tick interrupt | Returns true | Expected |
-| TCI-103 | After check_flag | Flag is cleared | Expected |
-| TCI-104 | Before tick interrupt | Returns false | Expected |
-| TCI-105 | After clear_flag | Flag is cleared | Expected |
-
-### 2.4 hal_tick_advance_ms (Mock)
-
-| Test ID | Scenario | Expected Result | Category |
-|---------|----------|-----------------|----------|
-| TCI-106 | Advance time in mock | get_ms returns updated value | Expected |
+| TCI-097 | After init | Returns milliseconds since boot | Expected |
+| TCI-098 | Over time | Value increments | Expected |
+| TCI-099 | Wraparound safe | Arithmetic works across 32-bit boundary | Boundary |
 
 ---
 
@@ -80,7 +61,7 @@ void     hal_tick_advance_ms(uint32_t ms);
 
 | Test ID | Enabler Story | Acceptance Criteria |
 |---------|---------------|---------------------|
-| TCI-099-106 | E5-002 | 100 ms sample interval derived from 1 ms tick |
+| TCI-096-099 | E5-002 | 100 ms sample interval derived from 1 ms tick |
 
 ---
 

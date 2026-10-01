@@ -128,13 +128,13 @@ A TC0 ISR would run a minimal state machine for time-critical operations while t
 
 ## Implementation Notes
 
-1. **Tick Flag Pattern:** TC0 ISR sets a volatile `tick_flag`. Main loop clears flag and runs state machine when set.
+1. **Timestamp-based Timing:** TC0 ISR increments a 32-bit millisecond counter. Main loop computes elapsed time via `now - last` (unsigned subtraction handles wraparound).
 
 2. **UART RX Handling:** UART RX ISR writes to ring buffer. Main loop polls buffer and parses when data available.
 
 3. **Non-blocking TX:** All UART TX operations must check TX ready status and return immediately if not ready.
 
-4. **LED Timing:** LED toggle uses tick counter modulo; does not block.
+4. **LED Timing:** LED toggle uses elapsed time accumulator; does not block.
 
 ---
 

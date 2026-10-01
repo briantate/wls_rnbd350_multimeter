@@ -53,7 +53,7 @@ TEST_GROUP(LedSvc)
     }
 };
 
-/* TCI-049: led_svc_init turns LED off */
+/* TCI-047: led_svc_init turns LED off */
 TEST(LedSvc, Init_TurnsLedOff)
 {
     // Arrange
@@ -67,7 +67,7 @@ TEST(LedSvc, Init_TurnsLedOff)
     // Assert: mock verifies LED set to off
 }
 
-/* TCI-050: Toggles at 1000ms when disconnected */
+/* TCI-048: Toggles at 1000ms when disconnected */
 TEST(LedSvc, Update_WhenDisconnected_TogglesAt1000ms)
 {
     // Arrange
@@ -80,7 +80,7 @@ TEST(LedSvc, Update_WhenDisconnected_TogglesAt1000ms)
     // Assert: mock verifies toggle called
 }
 
-/* TCI-051: Toggles at 200ms when streaming */
+/* TCI-049: Toggles at 200ms when streaming */
 TEST(LedSvc, Update_WhenStreaming_TogglesAt200ms)
 {
     // Arrange
@@ -93,7 +93,7 @@ TEST(LedSvc, Update_WhenStreaming_TogglesAt200ms)
     // Assert: mock verifies toggle
 }
 
-/* TCI-052: No toggle before 1000ms when disconnected */
+/* TCI-050: No toggle before 1000ms when disconnected */
 TEST(LedSvc, Update_Before1000ms_NoToggle)
 {
     // Arrange
@@ -106,7 +106,7 @@ TEST(LedSvc, Update_Before1000ms_NoToggle)
     // Assert: no toggle called
 }
 
-/* TCI-053: Toggles exactly at 1000ms */
+/* TCI-051: Toggles exactly at 1000ms */
 TEST(LedSvc, Update_At1000ms_Toggles)
 {
     // Arrange: First call with 500ms
@@ -125,7 +125,7 @@ TEST(LedSvc, Update_At1000ms_Toggles)
     // Assert: toggle happens at 1000ms boundary
 }
 
-/* TCI-054: No toggle before 200ms when streaming */
+/* TCI-052: No toggle before 200ms when streaming */
 TEST(LedSvc, Update_Before200ms_NoToggle)
 {
     // Arrange
@@ -138,7 +138,7 @@ TEST(LedSvc, Update_Before200ms_NoToggle)
     // Assert: no toggle
 }
 
-/* TCI-055: Toggles exactly at 200ms when streaming */
+/* TCI-053: Toggles exactly at 200ms when streaming */
 TEST(LedSvc, Update_At200ms_Toggles)
 {
     // Arrange: First call with 100ms
@@ -155,7 +155,7 @@ TEST(LedSvc, Update_At200ms_Toggles)
     // Assert: toggle at 200ms
 }
 
-/* TCI-056: State change mid-cycle adjusts rate */
+/* TCI-054: State change mid-cycle adjusts rate */
 TEST(LedSvc, Update_StateChangesMidCycle_AdjustsRate)
 {
     // Arrange: Start disconnected, accumulate 500ms
@@ -175,7 +175,7 @@ TEST(LedSvc, Update_StateChangesMidCycle_AdjustsRate)
     // Assert: toggle happens because 600ms > 200ms threshold
 }
 
-/* TCI-057: Accumulates elapsed time across calls */
+/* TCI-055: Accumulates elapsed time across calls */
 TEST(LedSvc, Update_AccumulatesElapsedTime)
 {
     // Arrange & Act: Multiple small updates
@@ -196,7 +196,7 @@ TEST(LedSvc, Update_AccumulatesElapsedTime)
     // Assert: toggle happens
 }
 
-/* TCI-058: Timer resets after toggle */
+/* TCI-056: Timer resets after toggle */
 TEST(LedSvc, Update_ResetsAfterToggle)
 {
     // Arrange: Trigger first toggle

@@ -36,19 +36,19 @@ void diag_svc_log(diag_level_t level, const char* subsys, const char* fmt, ...);
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-059 | Call init | Configures DIAG UART channel | Expected |
+| TCI-057 | Call init | Configures DIAG UART channel | Expected |
 
 ### 2.2 diag_svc_log
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-060 | Normal log | Output includes timestamp | Expected |
-| TCI-061 | Normal log | Output includes level string | Expected |
-| TCI-062 | Normal log | Output includes subsystem | Expected |
-| TCI-063 | Normal log | Output includes message | Expected |
-| TCI-064 | Level below VERBOSITY | No output | Expected |
-| TCI-065 | Level at VERBOSITY | Output produced | Boundary |
-| TCI-066 | Level above VERBOSITY | Output produced | Expected |
+| TCI-058 | Normal log | Output includes timestamp | Expected |
+| TCI-059 | Normal log | Output includes level string | Expected |
+| TCI-060 | Normal log | Output includes subsystem | Expected |
+| TCI-061 | Normal log | Output includes message | Expected |
+| TCI-062 | Level below VERBOSITY | No output | Expected |
+| TCI-063 | Level at VERBOSITY | Output produced | Boundary |
+| TCI-064 | Level above VERBOSITY | Output produced | Expected |
 
 ---
 
@@ -62,12 +62,6 @@ Example:
 ```
 [00012345] [INFO] [BLE] Connection established\r\n
 ```
-
-**Format Details:**
-- Timestamp: 8 digits, zero-padded milliseconds since boot
-- Level: DEBUG, INFO, WARN, ERROR
-- Subsystem: Caller-provided string (e.g., "BLE", "ADC", "MAIN")
-- Message: Printf-style formatted string
 
 ---
 
@@ -97,9 +91,9 @@ Default `DIAG_VERBOSITY` is `DIAG_INFO`.
 
 | Test ID | Enabler Story | Acceptance Criteria |
 |---------|---------------|---------------------|
-| TCI-059 | E4-002 | Diagnostic UART initialized |
-| TCI-060-063 | E4-002 | Formatted timestamped output |
-| TCI-064-066 | E4-003 | Verbosity filtering works |
+| TCI-057 | E4-002 | Diagnostic UART initialized |
+| TCI-058-061 | E4-002 | Formatted timestamped output |
+| TCI-062-064 | E4-003 | Verbosity filtering works |
 
 ---
 

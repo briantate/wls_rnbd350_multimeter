@@ -410,7 +410,7 @@ bool   hal_uart_tx_ready(hal_uart_channel_t ch);
 void   hal_uart_tx_byte(hal_uart_channel_t ch, uint8_t byte);
 void   hal_uart_tx_string(hal_uart_channel_t ch, const char* str);
 bool   hal_uart_rx_available(hal_uart_channel_t ch);
-uint8_t hal_uart_rx_byte(hal_uart_channel_t ch);
+bool hal_uart_rx_byte(hal_uart_channel_t ch, uint8_t* byte);
 ```
 
 **Owned Data:**
@@ -439,22 +439,15 @@ uint8_t hal_uart_rx_byte(hal_uart_channel_t ch);
 **Responsibilities:**
 - Initialize TC0 for 1 ms periodic interrupt
 - Maintain 32-bit millisecond counter
-- Provide flag for main loop to detect tick events
 
 **Public Interface:**
 ```c
 void     hal_tick_init(void);
-uint32_t hal_tick_get_ms(void);           // Milliseconds since boot
-bool     hal_tick_check_flag(void);       // Returns true once per ms, clears flag
-void     hal_tick_clear_flag(void);       // Manual flag clear if needed
-
-// For test mocking
-void     hal_tick_advance_ms(uint32_t ms); // Mock only: simulate time passing
+uint32_t hal_tick_get_ms(void);  // Milliseconds since boot (wraps at ~49 days)
 ```
 
 **Owned Data:**
 - `static volatile uint32_t tick_ms;`
-- `static volatile bool tick_flag;`
 
 **Dependencies:**
 - MCC Timer driver (target only)

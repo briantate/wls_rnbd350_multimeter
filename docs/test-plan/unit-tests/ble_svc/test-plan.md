@@ -35,43 +35,43 @@ void        ble_svc_discard_pending(void);
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-027 | Call init | Configures UART via hal_uart | Expected |
+| TCI-025 | Call init | Configures UART via hal_uart | Expected |
 
 ### 2.2 ble_svc_poll
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-028 | No data available | Returns BLE_EVENT_NONE | Expected |
-| TCI-029 | `%CONNECT%` received | Returns BLE_EVENT_CONNECT | Expected |
-| TCI-030 | `%DISCONNECT%` received | Returns BLE_EVENT_DISCONNECT | Expected |
-| TCI-031 | `%STREAM_OPEN%` received | Returns BLE_EVENT_STREAM_OPEN | Expected |
-| TCI-032 | Partial message | Returns BLE_EVENT_NONE | Expected |
-| TCI-033 | Fragmented `%CONNECT%` (byte-at-a-time) | Eventually returns CONNECT | Expected |
-| TCI-034 | Fragmented `%DISCONNECT%` | Eventually returns DISCONNECT | Expected |
-| TCI-035 | Fragmented `%STREAM_OPEN%` | Eventually returns STREAM_OPEN | Expected |
-| TCI-036 | Adjacent messages `%CONNECT%%STREAM_OPEN%` | Parses both sequentially | Expected |
-| TCI-037 | Garbage data before message | Ignores garbage, parses message | Error |
-| TCI-038 | Buffer overflow (long garbage) | Recovers gracefully | Error |
-| TCI-048 | Single byte at a time | Accumulates and parses correctly | Expected |
+| TCI-026 | No data available | Returns BLE_EVENT_NONE | Expected |
+| TCI-027 | `%CONNECT%` received | Returns BLE_EVENT_CONNECT | Expected |
+| TCI-028 | `%DISCONNECT%` received | Returns BLE_EVENT_DISCONNECT | Expected |
+| TCI-029 | `%STREAM_OPEN%` received | Returns BLE_EVENT_STREAM_OPEN | Expected |
+| TCI-030 | Partial message | Returns BLE_EVENT_NONE | Expected |
+| TCI-031 | Fragmented `%CONNECT%` (byte-at-a-time) | Eventually returns CONNECT | Expected |
+| TCI-032 | Fragmented `%DISCONNECT%` | Eventually returns DISCONNECT | Expected |
+| TCI-033 | Fragmented `%STREAM_OPEN%` | Eventually returns STREAM_OPEN | Expected |
+| TCI-034 | Adjacent messages `%CONNECT%%STREAM_OPEN%` | Parses both sequentially | Expected |
+| TCI-035 | Garbage data before message | Ignores garbage, parses message | Error |
+| TCI-036 | Buffer overflow (long garbage) | Recovers gracefully | Error |
+| TCI-046 | Single byte at a time | Accumulates and parses correctly | Expected |
 
 ### 2.3 ble_svc_transmit_measurement
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-039 | Normal transmission | Formats as JSON | Expected |
-| TCI-040 | JSON structure | `{"Meter":{"ohm":<value>}}` | Expected |
-| TCI-041 | Message terminator | Includes `\r\n` | Expected |
-| TCI-042 | Zero ohms | Formats as `{"Meter":{"ohm":0}}` | Boundary |
-| TCI-043 | Max ohms (4294967295) | Formats correctly | Boundary |
-| TCI-044 | Transmission | Sends via hal_uart | Expected |
+| TCI-037 | Normal transmission | Formats as JSON | Expected |
+| TCI-038 | JSON structure | `{"Meter":{"ohm":<value>}}` | Expected |
+| TCI-039 | Message terminator | Includes `\r\n` | Expected |
+| TCI-040 | Zero ohms | Formats as `{"Meter":{"ohm":0}}` | Boundary |
+| TCI-041 | Max ohms (4294967295) | Formats correctly | Boundary |
+| TCI-042 | Transmission | Sends via hal_uart | Expected |
 
 ### 2.4 ble_svc_discard_pending
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-045 | TX buffer has data | Clears TX buffer | Expected |
-| TCI-046 | RX buffer has data | Clears RX buffer | Expected |
-| TCI-047 | Parser mid-message | Resets parser state | Expected |
+| TCI-043 | TX buffer has data | Clears TX buffer | Expected |
+| TCI-044 | RX buffer has data | Clears RX buffer | Expected |
+| TCI-045 | Parser mid-message | Resets parser state | Expected |
 
 ---
 
@@ -117,11 +117,11 @@ IDLE ──'%'──► PARSING ──message complete──► EVENT_READY ─�
 
 | Test ID | Enabler Story | Acceptance Criteria |
 |---------|---------------|---------------------|
-| TCI-027 | E2-002 | UART initialized for RNBD350 |
-| TCI-028-038, TCI-048 | E2-003 | Status messages parsed correctly |
-| TCI-031, TCI-035 | E2-004 | STREAM_OPEN detected |
-| TCI-039-044 | E2-005 | JSON formatted and transmitted |
-| TCI-045-047 | E2-006 | Buffers cleared on disconnect |
+| TCI-025 | E2-002 | UART initialized for RNBD350 |
+| TCI-026-036, TCI-046 | E2-003 | Status messages parsed correctly |
+| TCI-029, TCI-033 | E2-004 | STREAM_OPEN detected |
+| TCI-037-042 | E2-005 | JSON formatted and transmitted |
+| TCI-043-045 | E2-006 | Buffers cleared on disconnect |
 
 ---
 

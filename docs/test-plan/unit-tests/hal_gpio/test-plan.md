@@ -36,31 +36,31 @@ void hal_gpio_toggle(hal_pin_t pin);
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-067 | Call init | Configures all pins | Expected |
+| TCI-065 | Call init | Configures all pins | Expected |
 
 ### 2.2 hal_gpio_write
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-068 | Write to LED pin | LED state set | Expected |
-| TCI-069 | Write to RES_A pin | RES_A state set | Expected |
-| TCI-070 | Write to RES_B pin | RES_B state set | Expected |
-| TCI-071 | Write to RES_C pin | RES_C state set | Expected |
-| TCI-072 | Write to SPI_CS pin | SPI_CS state set | Expected |
-| TCI-075 | Write to invalid pin | No effect, no crash | Error |
+| TCI-066 | Write to LED pin | LED state set | Expected |
+| TCI-067 | Write to RES_A pin | RES_A state set | Expected |
+| TCI-068 | Write to RES_B pin | RES_B state set | Expected |
+| TCI-069 | Write to RES_C pin | RES_C state set | Expected |
+| TCI-070 | Write to SPI_CS pin | SPI_CS state set | Expected |
+| TCI-073 | Write to invalid pin | No effect, no crash | Error |
 
 ### 2.3 hal_gpio_read
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-073 | Read pin state | Returns current state | Expected |
-| TCI-076 | Read invalid pin | Returns false | Error |
+| TCI-071 | Read pin state | Returns current state | Expected |
+| TCI-074 | Read invalid pin | Returns false | Error |
 
 ### 2.4 hal_gpio_toggle
 
 | Test ID | Scenario | Expected Result | Category |
 |---------|----------|-----------------|----------|
-| TCI-074 | Toggle pin | State inverted | Expected |
+| TCI-072 | Toggle pin | State inverted | Expected |
 
 ---
 
@@ -88,11 +88,11 @@ void hal_gpio_toggle(hal_pin_t pin);
 
 | Test ID | Enabler Story | Acceptance Criteria |
 |---------|---------------|---------------------|
-| TCI-067 | E1-004, E3-002 | GPIO pins configured |
-| TCI-068, TCI-074 | E3-002 | LED control works |
-| TCI-069-071, TCI-073 | E1-004 | Range pins controllable |
-| TCI-072 | E1-002 | SPI CS controllable |
-| TCI-075-076 | - | Robustness against invalid input |
+| TCI-065 | E1-004, E3-002 | GPIO pins configured |
+| TCI-066, TCI-072 | E3-002 | LED control works |
+| TCI-067-069, TCI-071 | E1-004 | Range pins controllable |
+| TCI-070 | E1-002 | SPI CS controllable |
+| TCI-073-074 | - | Robustness against invalid input |
 
 ---
 

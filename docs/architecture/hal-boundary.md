@@ -271,10 +271,10 @@ bool hal_uart_rx_available(hal_uart_channel_t ch);
 /**
  * @brief Read a received byte
  * @param ch    Channel to read from
- * @return      Received byte
- * @pre   hal_uart_rx_available(ch) == true
+ * @param byte  Pointer to store received byte
+ * @return      true if byte received, false if no data available
  */
-uint8_t hal_uart_rx_byte(hal_uart_channel_t ch);
+bool hal_uart_rx_byte(hal_uart_channel_t ch, uint8_t* byte);
 
 #endif /* HAL_UART_H */
 ```
@@ -391,21 +391,10 @@ void hal_tick_init(void);
 /**
  * @brief Get milliseconds since system start
  * @return  32-bit millisecond counter (wraps after ~49 days)
+ * @note    Use unsigned subtraction for elapsed time to handle wraparound:
+ *          elapsed = now - last; // Works correctly even across wrap
  */
 uint32_t hal_tick_get_ms(void);
-
-/**
- * @brief Check if a tick has occurred since last check
- * @return  true if at least 1 ms has elapsed since last call
- * @note    Clears the internal flag when returning true
- */
-bool hal_tick_check_flag(void);
-
-/**
- * @brief Manually clear the tick flag
- * @note  Use when resynchronizing timing
- */
-void hal_tick_clear_flag(void);
 
 #endif /* HAL_TICK_H */
 ```
@@ -413,9 +402,8 @@ void hal_tick_clear_flag(void);
 **Tick Implementation Notes:**
 
 - TC0 configured for 1 ms period
-- ISR increments counter and sets flag
-- Main loop polls flag; flag cleared on read
-- Counter is 32-bit, sufficient for 49+ days of operation
+- ISR increments 32-bit counter
+- Counter wraps after ~49 days; use unsigned subtraction for elapsed time
 
 ---
 

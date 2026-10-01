@@ -27,7 +27,7 @@ TEST_GROUP(HalSpi)
     }
 };
 
-/* TCI-077: hal_spi_init configures peripheral */
+/* TCI-075: hal_spi_init configures peripheral */
 TEST(HalSpi, Init_ConfiguresPeripheral)
 {
     // Arrange
@@ -39,7 +39,7 @@ TEST(HalSpi, Init_ConfiguresPeripheral)
     // Assert: MCC init called
 }
 
-/* TCI-078: Transfer sends all bytes */
+/* TCI-076: Transfer sends all bytes */
 TEST(HalSpi, Transfer_SendsAllBytes)
 {
     // Arrange
@@ -62,7 +62,7 @@ TEST(HalSpi, Transfer_SendsAllBytes)
     // Assert: all 3 calls made
 }
 
-/* TCI-079: Transfer receives all bytes */
+/* TCI-077: Transfer receives all bytes */
 TEST(HalSpi, Transfer_ReceivesAllBytes)
 {
     // Arrange
@@ -84,7 +84,7 @@ TEST(HalSpi, Transfer_ReceivesAllBytes)
     CHECK_EQUAL(0x33, rx[2]);
 }
 
-/* TCI-080: Zero length transfer - no operation */
+/* TCI-078: Zero length transfer - no operation */
 TEST(HalSpi, Transfer_ZeroLength_NoOp)
 {
     // Arrange
@@ -99,7 +99,7 @@ TEST(HalSpi, Transfer_ZeroLength_NoOp)
     // Assert: no driver calls, no CS toggle
 }
 
-/* TCI-081: NULL rx buffer - TX only */
+/* TCI-079: NULL rx buffer - TX only */
 TEST(HalSpi, Transfer_NullRx_SendsOnly)
 {
     // Arrange
@@ -120,7 +120,7 @@ TEST(HalSpi, Transfer_NullRx_SendsOnly)
     // Assert: TX happens, RX discarded (no crash)
 }
 
-/* TCI-082: Transfer asserts CS before first byte */
+/* TCI-080: Transfer asserts CS before first byte */
 TEST(HalSpi, Transfer_AssertsCs)
 {
     // Arrange
@@ -142,7 +142,7 @@ TEST(HalSpi, Transfer_AssertsCs)
     // Assert: CS asserted before SPI byte (verified by mock call order)
 }
 
-/* TCI-083: Transfer deasserts CS after last byte */
+/* TCI-081: Transfer deasserts CS after last byte */
 TEST(HalSpi, Transfer_DeassertsCs)
 {
     // Arrange
