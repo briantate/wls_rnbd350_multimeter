@@ -4,6 +4,10 @@
  */
 
 #include "measurement_svc.h"
+
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "../hal/hal_gpio.h"
 #include "../hal/hal_spi.h"
 

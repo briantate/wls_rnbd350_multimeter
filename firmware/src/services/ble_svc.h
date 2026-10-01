@@ -3,8 +3,8 @@
  * @brief RNBD350 communication and JSON data transmission (M-04)
  */
 
-#ifndef BLE_SVC_H
-#define BLE_SVC_H
+#ifndef BTOHM_SERVICES_BLE_SVC_H_
+#define BTOHM_SERVICES_BLE_SVC_H_
 
 #include <stdint.h>
 
@@ -15,9 +15,36 @@ typedef enum {
     BLE_EVENT_STREAM_OPEN
 } ble_event_t;
 
-void        ble_svc_init(void);
-ble_event_t ble_svc_poll(void);
-void        ble_svc_transmit_measurement(uint32_t ohms);
-void        ble_svc_discard_pending(void);
+/**
+ * @brief Initialize the BLE service.
+ *
+ * Configures UART for RNBD350 communication.
+ */
+void ble_svc_init(void);
 
-#endif /* BLE_SVC_H */
+/**
+ * @brief Poll for BLE events.
+ *
+ * Parses incoming UART data for status messages.
+ *
+ * @return Event type, or BLE_EVENT_NONE if no event.
+ */
+ble_event_t ble_svc_poll(void);
+
+/**
+ * @brief Transmit a measurement over BLE.
+ *
+ * Formats resistance as JSON and sends via UART.
+ *
+ * @param ohms Resistance value in ohms.
+ */
+void ble_svc_transmit_measurement(uint32_t ohms);
+
+/**
+ * @brief Discard pending TX and RX data.
+ *
+ * Called on disconnect to clear buffers.
+ */
+void ble_svc_discard_pending(void);
+
+#endif  /* BTOHM_SERVICES_BLE_SVC_H_ */

@@ -4,6 +4,11 @@
  */
 
 #include "hal_spi.h"
+
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
 #include "hal_gpio.h"
 
 void hal_spi_init(void)

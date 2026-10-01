@@ -4,6 +4,10 @@
  */
 
 #include "app_state.h"
+
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "../services/measurement_svc.h"
 #include "../services/ble_svc.h"
 #include "../services/led_svc.h"
@@ -11,7 +15,7 @@
 #include "../hal/hal_tick.h"
 #include "../hal/hal_gpio.h"
 
-#define SAMPLE_INTERVAL_MS 100
+#define MAIN_SAMPLE_INTERVAL_MS  (100U)
 
 int main(void)
 {
@@ -50,7 +54,7 @@ int main(void)
         }
 
         if (app_state_is_streaming()) {
-            if ((now_ms - last_sample_ms) >= SAMPLE_INTERVAL_MS) {
+            if ((now_ms - last_sample_ms) >= MAIN_SAMPLE_INTERVAL_MS) {
                 last_sample_ms = now_ms;
                 measurement_t m = measurement_svc_sample();
                 if (m.valid) {

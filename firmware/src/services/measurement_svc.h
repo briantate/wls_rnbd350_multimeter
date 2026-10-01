@@ -3,18 +3,31 @@
  * @brief Resistance measurement acquisition and conversion (M-03)
  */
 
-#ifndef MEASUREMENT_SVC_H
-#define MEASUREMENT_SVC_H
+#ifndef BTOHM_SERVICES_MEASUREMENT_SVC_H_
+#define BTOHM_SERVICES_MEASUREMENT_SVC_H_
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 typedef struct {
     uint32_t ohms;
     bool     valid;
 } measurement_t;
 
-void          measurement_svc_init(void);
+/**
+ * @brief Initialize the measurement service.
+ *
+ * Configures range selection GPIOs.
+ */
+void measurement_svc_init(void);
+
+/**
+ * @brief Take a resistance measurement sample.
+ *
+ * Reads the ADC and converts to ohms.
+ *
+ * @return Measurement result with validity flag.
+ */
 measurement_t measurement_svc_sample(void);
 
-#endif /* MEASUREMENT_SVC_H */
+#endif  /* BTOHM_SERVICES_MEASUREMENT_SVC_H_ */

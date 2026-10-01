@@ -3,8 +3,8 @@
  * @brief Diagnostic logging to dedicated UART (M-06)
  */
 
-#ifndef DIAG_SVC_H
-#define DIAG_SVC_H
+#ifndef BTOHM_SERVICES_DIAG_SVC_H_
+#define BTOHM_SERVICES_DIAG_SVC_H_
 
 typedef enum {
     DIAG_DEBUG,
@@ -18,9 +18,27 @@ typedef enum {
 #endif
 
 #define DIAG_LOG(level, subsys, msg, ...) \
-    do { if ((level) >= DIAG_VERBOSITY) diag_svc_log((level), (subsys), (msg), ##__VA_ARGS__); } while(0)
+    do { if ((level) >= DIAG_VERBOSITY) \
+        diag_svc_log((level), (subsys), (msg), ##__VA_ARGS__); \
+    } while (0)
 
+/**
+ * @brief Initialize the diagnostic service.
+ *
+ * Configures UART for diagnostic output.
+ */
 void diag_svc_init(void);
+
+/**
+ * @brief Log a diagnostic message.
+ *
+ * Formats and transmits a timestamped message.
+ *
+ * @param level   Severity level.
+ * @param subsys  Subsystem identifier string.
+ * @param fmt     printf-style format string.
+ * @param ...     Format arguments.
+ */
 void diag_svc_log(diag_level_t level, const char* subsys, const char* fmt, ...);
 
-#endif /* DIAG_SVC_H */
+#endif  /* BTOHM_SERVICES_DIAG_SVC_H_ */

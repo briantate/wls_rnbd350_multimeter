@@ -4,6 +4,9 @@
  */
 
 #include "ble_svc.h"
+
+#include <stdint.h>
+
 #include "../hal/hal_uart.h"
 
 void ble_svc_init(void)

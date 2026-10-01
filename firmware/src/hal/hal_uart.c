@@ -5,6 +5,9 @@
 
 #include "hal_uart.h"
 
+#include <stdbool.h>
+#include <stdint.h>
+
 void hal_uart_init(hal_uart_channel_t ch)
 {
     (void)ch;
@@ -39,10 +42,10 @@ bool hal_uart_rx_available(hal_uart_channel_t ch)
     return false;
 }
 
-bool hal_uart_rx_byte(hal_uart_channel_t ch, uint8_t* byte)
+bool hal_uart_rx_byte(hal_uart_channel_t ch, uint8_t* out_byte)
 {
     (void)ch;
-    (void)byte;
+    (void)out_byte;
     /* TODO: Receive byte via MCC driver */
     return false;
 }

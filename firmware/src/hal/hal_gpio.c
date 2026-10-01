@@ -5,6 +5,8 @@
 
 #include "hal_gpio.h"
 
+#include <stdbool.h>
+
 void hal_gpio_init(void)
 {
     /* TODO: Initialize GPIO pins via MCC driver */
